@@ -5,6 +5,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import Header from '../../components/Header/Header';
 import MyButton from '../../components/MyButton/MyButton';
@@ -12,6 +13,7 @@ import styles from './styles';
 import UserIcon from 'react-native-vector-icons/FontAwesome5';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearErrors, userSignUp} from '../../redux/Action/userAction';
+import {SIGNUP_RESET} from '../../redux/Constants/userConstant';
 
 const SignUp = props => {
   const [firstName, setFirstName] = useState('');
@@ -27,7 +29,7 @@ const SignUp = props => {
   const [showServerError, setShowServerError] = useState('');
 
   const dispatch = useDispatch();
-  const {loading, user, isAuthenticated, error} = useSelector(
+  const {loading, isRegisterSuccess, error} = useSelector(
     state => state.registerUser,
   );
 
@@ -120,15 +122,23 @@ const SignUp = props => {
       dispatch(clearErrors());
     }
 
-    if (isAuthenticated) {
-      props.navigation.navigate('Login');
+    if (isRegisterSuccess) {
+      props.navigation.navigate('Home');
       setFirstName('');
       setLastName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
+      ToastAndroid.showWithGravityAndOffset(
+        'Register Succeed',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch({type: SIGNUP_RESET});
     }
-  }, [dispatch, error, isAuthenticated]);
+  }, [dispatch, error, isRegisterSuccess]);
 
   return (
     <View style={styles.container}>

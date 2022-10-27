@@ -4,6 +4,9 @@ import {
   SIGNUP_FAIL,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
+  SIGNIN_REQUEST,
+  SIGNIN_SUCCESS,
+  SIGNIN_FAIL,
 } from '../Constants/userConstant';
 
 export const userSignUp = registerData => async dispatch => {
@@ -21,9 +24,30 @@ export const userSignUp = registerData => async dispatch => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: SIGNUP_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const userSignIn = signInData => async dispatch => {
+  try {
+    dispatch({type: SIGNIN_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = 'http://192.168.100.4:5000/users/signin';
+
+    const {data} = await axios.post(url, signInData, config);
+
+    dispatch({
+      type: SIGNIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SIGNIN_FAIL,
       payload: error?.response?.data?.message,
     });
   }

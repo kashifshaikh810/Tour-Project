@@ -1,30 +1,42 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   ScrollView,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import Header from '../../components/Header/Header';
 import MyButton from '../../components/MyButton/MyButton';
 import styles from './styles';
+import {useDispatch, useSelector} from 'react-redux';
 import UserIcon from 'react-native-vector-icons/FontAwesome5';
+import {clearErrors, userSignIn} from '../../redux/Action/userAction';
+import {SIGNIN_RESET} from '../../redux/Constants/userConstant';
 
 const Login = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [showServerError, setShowServerError] = useState('');
+
+  const dispatch = useDispatch();
+  const {loading, isAuthenticated, isLoginSuccess, error} = useSelector(
+    state => state.registerUser,
+  );
 
   const emailOnChange = text => {
     setEmail(text);
     setEmailError('');
+    setShowServerError('');
   };
 
   const passwordOnChange = text => {
     setPassword(text);
     setPasswordError('');
+    setShowServerError('');
   };
 
   const loginOnPressHandler = () => {
@@ -45,14 +57,39 @@ const Login = props => {
       setPasswordError('Please provide your password');
     }
 
-    if (password && password.length !== 8) {
+    if (password && password.length < 8) {
       setPasswordError('Password at least 8 characters long.');
     }
 
-    if (email && password) {
-      console.log('hi');
+    if (email && password && em.length > 0 && password.length >= 8) {
+      const data = {
+        email,
+        password,
+      };
+      dispatch(userSignIn(data));
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      setShowServerError(error);
+      dispatch(clearErrors());
+    }
+
+    if (isLoginSuccess) {
+      props.navigation.navigate('Home');
+      setEmail('');
+      setPassword('');
+      ToastAndroid.showWithGravityAndOffset(
+        'Signin Succeed',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch({type: SIGNIN_RESET});
+    }
+  }, [dispatch, error, isLoginSuccess]);
 
   return (
     <View style={styles.container}>
@@ -97,6 +134,13 @@ const Login = props => {
               )}
             </View>
           </View>
+
+          {showServerError && (
+            <Text style={[styles.errorText, {textAlign: 'center'}]}>
+              {showServerError}
+            </Text>
+          )}
+
           <MyButton
             {...props}
             title="LOGIN"
@@ -106,7 +150,7 @@ const Login = props => {
             android_ripple="#b3b3b3"
             style={styles.button}
             onPress={() => loginOnPressHandler()}
-            loading={false}
+            loading={loading}
           />
 
           <View style={styles.divider} />
