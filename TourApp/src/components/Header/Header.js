@@ -3,7 +3,7 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import SearchIcon from 'react-native-vector-icons/FontAwesome';
 
-const Header = () => {
+const Header = props => {
   return (
     <View style={styles.container}>
       <View>
@@ -11,10 +11,10 @@ const Header = () => {
       </View>
 
       <View style={styles.lastContent}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
           <Text style={styles.textStyle}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
           <Text style={styles.textStyle}>Login</Text>
         </TouchableOpacity>
         <TextInput placeholder="Search Tour" style={styles.input} />

@@ -1,0 +1,5 @@
+export const ALL_TOUR_REQUEST = 'ALL_TOUR_REQUEST';
+export const ALL_TOUR_SUCCESS = 'ALL_TOUR_SUCCESS';
+export const ALL_TOUR_FAIL = 'ALL_TOUR_FAIL';
+
+export const CLEAR_ERROR = 'CLEAR_ERROR';

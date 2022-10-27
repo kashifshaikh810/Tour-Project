@@ -6,9 +6,11 @@ import {
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {userReducer} from './Reducer/userReducer';
+import {tourReducer} from './Reducer/tourReducer';
 
 const reducer = combineReducers({
   registerUser: userReducer,
+  allTours: tourReducer,
 });
 
 let initialState = {};
