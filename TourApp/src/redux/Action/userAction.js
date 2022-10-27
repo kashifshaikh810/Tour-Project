@@ -7,6 +7,9 @@ import {
   SIGNIN_REQUEST,
   SIGNIN_SUCCESS,
   SIGNIN_FAIL,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAIL,
 } from '../Constants/userConstant';
 
 export const userSignUp = registerData => async dispatch => {
@@ -48,6 +51,26 @@ export const userSignIn = signInData => async dispatch => {
   } catch (error) {
     dispatch({
       type: SIGNIN_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const loadUser = () => async dispatch => {
+  try {
+    dispatch({type: LOAD_USER_REQUEST});
+
+    const url = 'http://192.168.100.4:5000/users/me';
+
+    const {data} = await axios.get(url);
+
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOAD_USER_FAIL,
       payload: error?.response?.data?.message,
     });
   }

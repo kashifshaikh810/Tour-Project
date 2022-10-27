@@ -89,7 +89,11 @@ const Login = props => {
       );
       dispatch({type: SIGNIN_RESET});
     }
-  }, [dispatch, error, isLoginSuccess]);
+
+    if (isAuthenticated) {
+      props.navigation.navigate('Home');
+    }
+  }, [dispatch, error, isLoginSuccess, isAuthenticated]);
 
   return (
     <View style={styles.container}>

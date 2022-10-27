@@ -2,8 +2,11 @@ import React from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import SearchIcon from 'react-native-vector-icons/FontAwesome';
+import {useSelector} from 'react-redux';
 
 const Header = props => {
+  const {isAuthenticated} = useSelector(state => state.registerUser);
+
   return (
     <View style={styles.container}>
       <View>
@@ -15,12 +18,27 @@ const Header = props => {
           <Text style={styles.textStyle}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
-          <Text style={styles.textStyle}>Login</Text>
+          <Text style={styles.textStyle}>
+            {isAuthenticated === false ? 'Login' : 'Add Tour'}
+          </Text>
         </TouchableOpacity>
-        <TextInput placeholder="Search Tour" style={styles.input} />
+
+        <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+          <Text style={styles.textStyle}>
+            {isAuthenticated === true && 'Dashboard'}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+          <Text style={styles.textStyle}>
+            {isAuthenticated === true && 'Logout'}
+          </Text>
+        </TouchableOpacity>
+
+        {/* <TextInput placeholder="Search Tour" style={styles.input} />
         <TouchableOpacity>
           <SearchIcon name="search" size={30} style={styles.textStyle} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
