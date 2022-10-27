@@ -8,7 +8,7 @@ export const createTour = catchAsyncError(async (req, res, next) => {
 
   const newTour = new TourModel({
     ...tour,
-    user: req.user._id,
+    creator: req.user._id,
     createdAt: new Date().toISOString(),
   });
 
@@ -47,7 +47,7 @@ export const getToursByUser = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("User doesn't exist", 404));
   }
 
-  const userTours = await TourModel.find({ user: id });
+  const userTours = await TourModel.find({ creator: id });
 
   res.status(200).json({
     success: true,

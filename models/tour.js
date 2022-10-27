@@ -14,11 +14,7 @@ const tourSchema = mongoose.Schema({
     type: [String],
     default: [],
   },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: true,
-  },
+  creator: String,
 });
 
 const TourModel = mongoose.model("Tour", tourSchema);
