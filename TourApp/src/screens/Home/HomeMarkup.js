@@ -55,7 +55,9 @@ const HomeMarkup = props => {
                     color="blue"
                   />
                   <Text style={styles.like}>{item?.likes?.length}</Text>
-                  <Text style={styles.like}>Likes</Text>
+                  <Text style={styles.like}>
+                    {item?.likes?.length <= 1 ? 'Like' : 'Likes'}
+                  </Text>
                 </TouchableOpacity>
               </View>
 
