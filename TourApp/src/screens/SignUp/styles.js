@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   textInput: tw`w-11/12 border-2 border-gray-300 rounded self-center pl-4 pr-4 mt-10 text-gray-600`,
   errorText: tw`text-red-500 pl-5 pt-2`,
   borderRedColor: tw`border-red-500`,
-  button: tw`self-center mt-10 mb-5`,
+  button: tw`w-11/12 h-11 bg-green-200 justify-center items-center rounded self-center mt-10 mb-5`,
   divider: tw`w-11/12 h-0.5 bg-gray-200 mt-2 self-center`,
   already: tw`flex-row h-24 justify-center items-center`,
   alreadyText: tw`text-xl pr-2 text-blue-600`,

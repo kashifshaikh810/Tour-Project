@@ -10,7 +10,6 @@ const MyButton = props => {
         android_ripple={{color: props?.android_ripple}}
         style={({pressed}) => [
           {...props?.style},
-          styles.pressable,
           {backgroundColor: props?.bgColor},
         ]}>
         {({pressed}) => (

@@ -12,7 +12,6 @@ import styles from './styles';
 import LikeAndDislikeIcon from 'react-native-vector-icons/AntDesign';
 
 const HomeMarkup = props => {
-  console.log(props.tours);
   return (
     <View style={styles.container}>
       <Header {...props} />
@@ -33,7 +32,11 @@ const HomeMarkup = props => {
                 {item.tags &&
                   item.tags.map((tag, index) => {
                     return (
-                      <TouchableOpacity key={index}>
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() =>
+                          props.navigation.navigate('ToursByTag', {tag: tag})
+                        }>
                         <Text style={styles.tagText}>#{tag}</Text>
                       </TouchableOpacity>
                     );
