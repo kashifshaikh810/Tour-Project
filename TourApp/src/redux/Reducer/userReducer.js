@@ -3,6 +3,10 @@ import {
   LOAD_USER_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
+  LOGOUT_USER_FAIL,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_RESET,
+  LOGOUT_USER_SUCCESS,
   SIGNIN_FAIL,
   SIGNIN_REQUEST,
   SIGNIN_RESET,
@@ -15,6 +19,7 @@ import {
 
 export const userReducer = (state = {user: []}, action) => {
   switch (action.type) {
+    case LOGOUT_USER_REQUEST:
     case LOAD_USER_REQUEST:
     case SIGNIN_REQUEST:
     case SIGNUP_REQUEST:
@@ -46,6 +51,15 @@ export const userReducer = (state = {user: []}, action) => {
         isAuthenticated: true,
         user: action.payload,
       };
+    case LOGOUT_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        isLogout: action.payload,
+        user: null,
+      };
+    case LOGOUT_USER_FAIL:
     case LOAD_USER_FAIL:
     case SIGNIN_FAIL:
     case SIGNUP_FAIL:
@@ -64,6 +78,11 @@ export const userReducer = (state = {user: []}, action) => {
       return {
         ...state,
         isLoginSuccess: false,
+      };
+    case LOGOUT_USER_RESET:
+      return {
+        ...state,
+        isLogout: false,
       };
     case CLEAR_ERROR:
       return {

@@ -1,11 +1,52 @@
-import React from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ToastAndroid,
+  ActivityIndicator,
+} from 'react-native';
 import styles from './styles';
 import SearchIcon from 'react-native-vector-icons/FontAwesome';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {clearErrors, userLogout} from '../../redux/Action/userAction';
+import {LOGOUT_USER_RESET} from '../../redux/Constants/userConstant';
 
 const Header = props => {
-  const {isAuthenticated} = useSelector(state => state.registerUser);
+  const dispatch = useDispatch();
+  const {loading, isAuthenticated, isLogout, error} = useSelector(
+    state => state.registerUser,
+  );
+
+  const logout = () => {
+    dispatch(userLogout());
+  };
+
+  useEffect(() => {
+    if (isLogout) {
+      props.navigation.navigate('Login');
+      ToastAndroid.showWithGravityAndOffset(
+        'Logout Succeed',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch({type: LOGOUT_USER_RESET});
+    }
+
+    if (error) {
+      ToastAndroid.showWithGravityAndOffset(
+        error,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch(clearErrors());
+    }
+  }, [isLogout, error]);
 
   return (
     <View style={styles.container}>
@@ -29,9 +70,13 @@ const Header = props => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => logout()}>
           <Text style={styles.textStyle}>
-            {isAuthenticated === true && 'Logout'}
+            {loading && isAuthenticated === true ? (
+              <ActivityIndicator />
+            ) : (
+              isAuthenticated === true && 'Logout'
+            )}
           </Text>
         </TouchableOpacity>
 
