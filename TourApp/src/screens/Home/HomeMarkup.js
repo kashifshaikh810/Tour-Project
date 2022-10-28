@@ -55,7 +55,8 @@ const HomeMarkup = props => {
                   <Text numberOfLines={2} style={styles.description}>
                     {item.description}
                   </Text>
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('TourDetail')}>
                     <Text style={styles.readMore}>Read More</Text>
                   </TouchableOpacity>
                 </View>

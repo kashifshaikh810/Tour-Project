@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/Login/Login';
 import SignUp from '../screens/SignUp/SignUp';
 import ToursByTag from '../screens/ToursByTag/ToursByTag';
+import TourDetail from '../screens/TourDetail/TourDetail';
 import Home from '../screens/Home/Home';
 import {useSelector} from 'react-redux';
 
@@ -24,6 +25,7 @@ const Navigation = () => {
         )}
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ToursByTag" component={ToursByTag} />
+        <Stack.Screen name="TourDetail" component={TourDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
