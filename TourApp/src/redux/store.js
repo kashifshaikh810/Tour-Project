@@ -6,12 +6,17 @@ import {
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {userReducer} from './Reducer/userReducer';
-import {tourReducer, toursByTagReducer} from './Reducer/tourReducer';
+import {
+  tourDetailReducer,
+  tourReducer,
+  toursByTagReducer,
+} from './Reducer/tourReducer';
 
 const reducer = combineReducers({
   registerUser: userReducer,
   allTours: tourReducer,
   toursByTag: toursByTagReducer,
+  tourDetail: tourDetailReducer,
 });
 
 let initialState = {};

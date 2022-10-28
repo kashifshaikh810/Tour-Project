@@ -44,7 +44,7 @@ const HomeMarkup = props => {
 
                 <TouchableOpacity style={styles.likeContainer}>
                   <LikeAndDislikeIcon name="like2" size={20} color="blue" />
-                  <Text style={styles.like}>2</Text>
+                  <Text style={styles.like}>{item?.likes?.length}</Text>
                   <Text style={styles.like}>Likes</Text>
                 </TouchableOpacity>
               </View>
@@ -54,11 +54,25 @@ const HomeMarkup = props => {
                 <View style={styles.flexRow}>
                   <Text numberOfLines={2} style={styles.description}>
                     {item.description}
+                    {item.description.length < 40 && (
+                      <TouchableOpacity
+                        onPress={() =>
+                          props.navigation.navigate('TourDetail', {
+                            id: item._id,
+                          })
+                        }>
+                        <Text style={styles.readMore}>Read More</Text>
+                      </TouchableOpacity>
+                    )}
                   </Text>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('TourDetail')}>
-                    <Text style={styles.readMore}>Read More</Text>
-                  </TouchableOpacity>
+                  {item.description.length < 30 ? null : (
+                    <TouchableOpacity
+                      onPress={() =>
+                        props.navigation.navigate('TourDetail', {id: item._id})
+                      }>
+                      <Text style={styles.readMore}>Read More</Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>
