@@ -3,6 +3,9 @@ import {
   ALL_TOUR_REQUEST,
   ALL_TOUR_SUCCESS,
   CLEAR_ERROR,
+  TOURS_BY_TAG_FAIL,
+  TOURS_BY_TAG_REQUEST,
+  TOURS_BY_TAG_SUCCESS,
 } from '../Constants/tourConstant';
 
 export const tourReducer = (state = {tours: []}, action) => {
@@ -19,6 +22,36 @@ export const tourReducer = (state = {tours: []}, action) => {
         tours: action.payload,
       };
     case ALL_TOUR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const toursByTagReducer = (state = {tours: []}, action) => {
+  switch (action.type) {
+    case TOURS_BY_TAG_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case TOURS_BY_TAG_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        tours: action.payload,
+      };
+    case TOURS_BY_TAG_FAIL:
       return {
         ...state,
         loading: false,
