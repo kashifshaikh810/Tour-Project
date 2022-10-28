@@ -42,8 +42,18 @@ const HomeMarkup = props => {
                     );
                   })}
 
-                <TouchableOpacity style={styles.likeContainer}>
-                  <LikeAndDislikeIcon name="like2" size={20} color="blue" />
+                <TouchableOpacity
+                  style={styles.likeContainer}
+                  onPress={() => props.likeOnPressHandler(item)}>
+                  <LikeAndDislikeIcon
+                    name={
+                      item?.likes.find(like => like === props?.userId)
+                        ? 'like1'
+                        : 'like2'
+                    }
+                    size={20}
+                    color="blue"
+                  />
                   <Text style={styles.like}>{item?.likes?.length}</Text>
                   <Text style={styles.like}>Likes</Text>
                 </TouchableOpacity>

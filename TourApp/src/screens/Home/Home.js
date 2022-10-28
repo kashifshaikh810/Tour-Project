@@ -1,12 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import HomeMarkup from './HomeMarkup';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearErrors, getTours} from '../../redux/Action/tourAction';
+import {clearErrors, getTours, likeTour} from '../../redux/Action/tourAction';
 import {ToastAndroid} from 'react-native';
 
 const Home = props => {
   const dispatch = useDispatch();
   const {loading, tours, error} = useSelector(state => state.allTours);
+
+  const {user} = useSelector(state => state.registerUser);
+
+  const {updatedTour, error: updatedTourError} = useSelector(
+    state => state.likeTour,
+  );
+
+  const [noReload, setNoReload] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -20,10 +28,39 @@ const Home = props => {
       dispatch(clearErrors());
     }
 
-    dispatch(getTours());
-  }, [dispatch, error]);
+    if (updatedTourError) {
+      ToastAndroid.showWithGravityAndOffset(
+        updatedTourError,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch(clearErrors());
+    }
 
-  return <HomeMarkup {...props} loading={loading} tours={tours} />;
+    if (updatedTour) {
+      dispatch(getTours());
+    }
+
+    dispatch(getTours());
+  }, [dispatch, error, updatedTourError, updatedTour]);
+
+  const likeOnPressHandler = item => {
+    dispatch(likeTour(item._id));
+    setNoReload(true);
+  };
+
+  return (
+    <HomeMarkup
+      {...props}
+      loading={noReload ? false : loading}
+      tours={tours}
+      updatedTour={updatedTour}
+      likeOnPressHandler={likeOnPressHandler}
+      userId={user?._id}
+    />
+  );
 };
 
 export default Home;

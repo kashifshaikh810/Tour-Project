@@ -10,6 +10,9 @@ import {
   TOUR_DETAIL_REQUEST,
   TOUR_DETAIL_SUCCESS,
   TOUR_DETAIL_FAIL,
+  LIKE_TOUR_REQUEST,
+  LIKE_TOUR_SUCCESS,
+  LIKE_TOUR_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -67,6 +70,28 @@ export const getTourDetail = id => async dispatch => {
   } catch (error) {
     dispatch({
       type: TOUR_DETAIL_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const likeTour = id => async dispatch => {
+  try {
+    dispatch({type: LIKE_TOUR_REQUEST});
+
+    const url = `http://192.168.100.4:5000/tour/likeTour/${id}`;
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const {data} = await axios.put(url, config);
+
+    dispatch({
+      type: LIKE_TOUR_SUCCESS,
+      payload: data.updatedTour,
+    });
+  } catch (error) {
+    dispatch({
+      type: LIKE_TOUR_FAIL,
       payload: error?.response?.data?.message,
     });
   }

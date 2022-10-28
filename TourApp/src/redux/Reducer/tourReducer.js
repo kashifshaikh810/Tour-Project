@@ -3,6 +3,9 @@ import {
   ALL_TOUR_REQUEST,
   ALL_TOUR_SUCCESS,
   CLEAR_ERROR,
+  LIKE_TOUR_FAIL,
+  LIKE_TOUR_REQUEST,
+  LIKE_TOUR_SUCCESS,
   TOURS_BY_TAG_FAIL,
   TOURS_BY_TAG_REQUEST,
   TOURS_BY_TAG_SUCCESS,
@@ -85,6 +88,36 @@ export const tourDetailReducer = (state = {tour: {}}, action) => {
         tour: action.payload,
       };
     case TOUR_DETAIL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const likeTourReducer = (state = {updatedTour: {}}, action) => {
+  switch (action.type) {
+    case LIKE_TOUR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LIKE_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        updatedTour: action.payload,
+      };
+    case LIKE_TOUR_FAIL:
       return {
         ...state,
         loading: false,
