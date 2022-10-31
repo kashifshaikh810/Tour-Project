@@ -47,8 +47,10 @@ const Home = props => {
   }, [dispatch, error, updatedTourError, updatedTour]);
 
   const likeOnPressHandler = item => {
-    dispatch(likeTour(item._id));
-    setNoReload(true);
+    if (user?._id) {
+      dispatch(likeTour(item._id));
+      setNoReload(true);
+    }
   };
 
   return (
