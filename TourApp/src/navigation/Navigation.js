@@ -7,6 +7,7 @@ import ToursByTag from '../screens/ToursByTag/ToursByTag';
 import TourDetail from '../screens/TourDetail/TourDetail';
 import Home from '../screens/Home/Home';
 import {useSelector} from 'react-redux';
+import Dashboard from '../screens/Dashboard/Dashboard';
 
 const Navigation = () => {
   const Stack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ const Navigation = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ToursByTag" component={ToursByTag} />
         <Stack.Screen name="TourDetail" component={TourDetail} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
