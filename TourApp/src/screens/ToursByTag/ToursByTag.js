@@ -25,8 +25,20 @@ const ToursByTag = props => {
     dispatch(getToursByTagName(tag));
   }, [dispatch, error]);
 
+  const readMoreOnPressHandler = item => {
+    props.navigation.navigate('TourDetail', {
+      id: item._id,
+    });
+  };
+
   return (
-    <ToursByTagMarkup {...props} tag={tag} loading={loading} tours={tours} />
+    <ToursByTagMarkup
+      {...props}
+      tag={tag}
+      loading={loading}
+      tours={tours}
+      readMoreOnPressHandler={readMoreOnPressHandler}
+    />
   );
 };
 

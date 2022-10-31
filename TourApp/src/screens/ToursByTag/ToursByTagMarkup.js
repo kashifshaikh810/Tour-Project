@@ -40,7 +40,7 @@ const ToursByTagMarkup = props => {
                     afterPressColor="#f3f3f3"
                     android_ripple="#f3f3f3"
                     style={styles.button}
-                    onPress={() => {}}
+                    onPress={() => props?.readMoreOnPressHandler(item)}
                   />
                 </View>
               </View>

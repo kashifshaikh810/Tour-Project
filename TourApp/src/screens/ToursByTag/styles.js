@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   card: tw`w-11/12 h-28 border-2 border-gray-100 self-center mt-4`,
   image: tw`w-5/12 h-28`,
   cardContent: tw`flex-row`,
-  title: {maxWidth: '75%'},
+  title: {minWidth: '70%', maxWidth: '70%'},
   marginTop: tw`mt-2 ml-2`,
   button: tw`w-5/12 p-1 ml-2 mt-2 rounded-xl items-center`,
 });
