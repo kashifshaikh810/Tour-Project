@@ -13,6 +13,9 @@ import {
   LIKE_TOUR_REQUEST,
   LIKE_TOUR_SUCCESS,
   LIKE_TOUR_FAIL,
+  ALL_CURRENT_USER_TOUR_REQUEST,
+  ALL_CURRENT_USER_TOUR_SUCCESS,
+  ALL_CURRENT_USER_TOUR_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -79,9 +82,9 @@ export const likeTour = id => async dispatch => {
   try {
     dispatch({type: LIKE_TOUR_REQUEST});
 
-    const url = `http://192.168.100.4:5000/tour/likeTour/${id}`;
-
     const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = `http://192.168.100.4:5000/tour/likeTour/${id}`;
 
     const {data} = await axios.put(url, config);
 
@@ -101,4 +104,26 @@ export const clearErrors = () => dispatch => {
   dispatch({
     type: CLEAR_ERROR,
   });
+};
+
+export const getCurrentUserTour = id => async dispatch => {
+  try {
+    dispatch({type: ALL_CURRENT_USER_TOUR_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = `http://192.168.100.4:5000/tour/userTours/${id}`;
+
+    const {data} = await axios.get(url, config);
+
+    dispatch({
+      type: ALL_CURRENT_USER_TOUR_SUCCESS,
+      payload: data.userTours,
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_CURRENT_USER_TOUR_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
 };

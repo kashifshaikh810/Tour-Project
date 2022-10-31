@@ -1,4 +1,7 @@
 import {
+  ALL_CURRENT_USER_TOUR_FAIL,
+  ALL_CURRENT_USER_TOUR_REQUEST,
+  ALL_CURRENT_USER_TOUR_SUCCESS,
   ALL_TOUR_FAIL,
   ALL_TOUR_REQUEST,
   ALL_TOUR_SUCCESS,
@@ -118,6 +121,36 @@ export const likeTourReducer = (state = {updatedTour: {}}, action) => {
         updatedTour: action.payload,
       };
     case LIKE_TOUR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const currentUserAllToursReducer = (state = {tours: []}, action) => {
+  switch (action.type) {
+    case ALL_CURRENT_USER_TOUR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ALL_CURRENT_USER_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        tours: action.payload,
+      };
+    case ALL_CURRENT_USER_TOUR_FAIL:
       return {
         ...state,
         loading: false,
