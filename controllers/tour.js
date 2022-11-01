@@ -109,13 +109,13 @@ export const getToursBySearch = catchAsyncError(async (req, res, next) => {
 export const getToursByTag = catchAsyncError(async (req, res, next) => {
   const { tag } = req.params;
 
-  const tours = await TourModel.find({ tag: { $in: tag } });
+  const tours = await TourModel.find({ tags: { $in: tag } });
 
   res.json(tours);
 });
 
 export const getRelatedTours = catchAsyncError(async (req, res, next) => {
-  const tags = req.body;
+  const { tags } = req.body;
 
   const tours = await TourModel.find({ tag: { $in: tags } });
 
