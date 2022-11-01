@@ -47,6 +47,7 @@ export const userSignIn = signInData => async dispatch => {
 
     const {data} = await axios.post(url, signInData, config);
 
+    console.log(data, 'data');
     dispatch({
       type: SIGNIN_SUCCESS,
       payload: data,

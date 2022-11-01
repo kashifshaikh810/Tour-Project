@@ -8,6 +8,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {userReducer} from './Reducer/userReducer';
 import {
   currentUserAllToursReducer,
+  deleteUserTourReducer,
   likeTourReducer,
   tourDetailReducer,
   tourReducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   tourDetail: tourDetailReducer,
   likeTour: likeTourReducer,
   currentUserTours: currentUserAllToursReducer,
+  deleteTour: deleteUserTourReducer,
 });
 
 let initialState = {};

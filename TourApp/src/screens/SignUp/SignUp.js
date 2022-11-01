@@ -14,6 +14,7 @@ import UserIcon from 'react-native-vector-icons/FontAwesome5';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearErrors, userSignUp} from '../../redux/Action/userAction';
 import {SIGNUP_RESET} from '../../redux/Constants/userConstant';
+import {getTours} from '../../redux/Action/tourAction';
 
 const SignUp = props => {
   const [firstName, setFirstName] = useState('');
@@ -123,6 +124,8 @@ const SignUp = props => {
     }
 
     if (isRegisterSuccess) {
+      dispatch(getTours());
+      dispatch(loadUser());
       props.navigation.navigate('Home');
       setFirstName('');
       setLastName('');

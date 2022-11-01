@@ -16,6 +16,9 @@ import {
   ALL_CURRENT_USER_TOUR_REQUEST,
   ALL_CURRENT_USER_TOUR_SUCCESS,
   ALL_CURRENT_USER_TOUR_FAIL,
+  DELETE_USER_TOUR_REQUEST,
+  DELETE_USER_TOUR_SUCCESS,
+  DELETE_USER_TOUR_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -123,6 +126,28 @@ export const getCurrentUserTour = id => async dispatch => {
   } catch (error) {
     dispatch({
       type: ALL_CURRENT_USER_TOUR_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const deleteUserTour = id => async dispatch => {
+  try {
+    dispatch({type: DELETE_USER_TOUR_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = `http://192.168.100.4:5000/tour/${id}`;
+
+    const {data} = await axios.delete(url);
+
+    dispatch({
+      type: DELETE_USER_TOUR_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_USER_TOUR_FAIL,
       payload: error?.response?.data?.message,
     });
   }

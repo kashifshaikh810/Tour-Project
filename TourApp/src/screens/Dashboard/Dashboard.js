@@ -1,12 +1,28 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {ToastAndroid} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearErrors, getCurrentUserTour} from '../../redux/Action/tourAction';
+import {
+  clearErrors,
+  deleteUserTour,
+  getCurrentUserTour,
+  getTours,
+} from '../../redux/Action/tourAction';
+import {DELETE_USER_TOUR_RESET} from '../../redux/Constants/tourConstant';
 import DashboardMarkup from './DashboardMarkup';
 
 const Dashboard = props => {
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.registerUser);
   const {loading, tours, error} = useSelector(state => state.currentUserTours);
+
+  const [noReloading, setNoReloading] = useState(false);
+  const [showLoaderOnlyOneCard, setShowLoaderOnlyOneCard] = useState('');
+
+  const {
+    loading: deleteLoading,
+    isDeleted,
+    error: deleteError,
+  } = useSelector(state => state.deleteTour);
 
   useEffect(() => {
     if (error) {
@@ -20,8 +36,33 @@ const Dashboard = props => {
       dispatch(clearErrors());
     }
 
+    if (isDeleted) {
+      setNoReloading(true);
+      dispatch(getTours());
+      dispatch(getCurrentUserTour(user?._id));
+      ToastAndroid.showWithGravityAndOffset(
+        'Tour Deleted succeed',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch({type: DELETE_USER_TOUR_RESET});
+    }
+
+    if (deleteError) {
+      ToastAndroid.showWithGravityAndOffset(
+        deleteError,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch(clearErrors());
+    }
+
     dispatch(getCurrentUserTour(user?._id));
-  }, [dispatch, user, error]);
+  }, [dispatch, user, error, isDeleted, deleteError, noReloading]);
 
   const readMoreOnPressHandler = item => {
     props.navigation.navigate('TourDetail', {
@@ -29,13 +70,21 @@ const Dashboard = props => {
     });
   };
 
+  const deleteTourOnPressHandler = item => {
+    setShowLoaderOnlyOneCard(item?._id);
+    dispatch(deleteUserTour(item?._id));
+  };
+
   return (
     <DashboardMarkup
       {...props}
       name={user?.name}
-      loading={loading}
+      loading={noReloading ? false : loading}
+      deleteLoading={deleteLoading}
       tours={tours}
       readMoreOnPressHandler={readMoreOnPressHandler}
+      deleteTourOnPressHandler={deleteTourOnPressHandler}
+      showLoaderOnlyOneCard={showLoaderOnlyOneCard}
     />
   );
 };

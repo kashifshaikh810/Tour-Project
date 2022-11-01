@@ -11,8 +11,9 @@ import Dashboard from '../screens/Dashboard/Dashboard';
 
 const Navigation = () => {
   const Stack = createNativeStackNavigator();
-  const {isAuthenticated} = useSelector(state => state.registerUser);
+  const {user, isAuthenticated} = useSelector(state => state.registerUser);
 
+  console.log(user);
   return (
     <NavigationContainer>
       <Stack.Navigator

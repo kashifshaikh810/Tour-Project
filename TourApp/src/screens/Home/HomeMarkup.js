@@ -34,6 +34,7 @@ const HomeMarkup = props => {
                     return (
                       <TouchableOpacity
                         key={index}
+                        style={styles.fix}
                         onPress={() =>
                           props.navigation.navigate('ToursByTag', {tag: tag})
                         }>
@@ -41,25 +42,46 @@ const HomeMarkup = props => {
                       </TouchableOpacity>
                     );
                   })}
-
-                <TouchableOpacity
-                  style={styles.likeContainer}
-                  onPress={() => props.likeOnPressHandler(item)}>
-                  <LikeAndDislikeIcon
-                    name={
-                      item?.likes.find(like => like === props?.userId)
-                        ? 'like1'
-                        : 'like2'
-                    }
-                    size={20}
-                    color="blue"
-                  />
-                  <Text style={styles.like}>{item?.likes?.length}</Text>
-                  <Text style={styles.like}>
-                    {item?.likes?.length <= 1 ? 'Like' : 'Likes'}
-                  </Text>
-                </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                disabled={!props?.isAuthenticated}
+                style={styles.likeContainer}
+                onPress={() => props.likeOnPressHandler(item)}>
+                <LikeAndDislikeIcon
+                  name={
+                    item?.likes.find(like => like === props?.userId)
+                      ? 'like1'
+                      : 'like2'
+                  }
+                  size={20}
+                  color="blue"
+                />
+                {item.likes.length >= 2 ? (
+                  <Text>
+                    {' '}
+                    {`${
+                      item?.likes.find(like => like === props?.userId)
+                        ? 'You and'
+                        : ''
+                    } ${
+                      props?.isAuthenticated
+                        ? item.likes.length - 1
+                        : item.likes.length
+                    } ${item.likes.length >= 2 ? 'other people likes' : ''}  `}
+                  </Text>
+                ) : (
+                  <>
+                    <Text style={styles.like}>{item?.likes?.length}</Text>
+                    <Text style={styles.like}>
+                      {item?.likes?.length <= 1 ? 'Like' : 'Likes'}
+                    </Text>
+                  </>
+                )}
+              </TouchableOpacity>
+              {console.log(
+                item?.likes.find(like => like === props?.userId),
+                'dd',
+              )}
 
               <View style={styles.titleAndDescriptionContainer}>
                 <Text style={styles.title}>{item.title}</Text>

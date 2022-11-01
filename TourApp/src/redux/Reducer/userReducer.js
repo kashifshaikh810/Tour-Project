@@ -34,7 +34,7 @@ export const userReducer = (state = {user: []}, action) => {
         loading: false,
         isAuthenticated: true,
         isRegisterSuccess: action.payload.success,
-        user: action.payload,
+        user: action.payload.user,
       };
     case SIGNIN_SUCCESS:
       return {
@@ -42,7 +42,7 @@ export const userReducer = (state = {user: []}, action) => {
         loading: false,
         isAuthenticated: true,
         isLoginSuccess: action.payload.success,
-        user: action.payload,
+        user: action.payload.user,
       };
     case LOAD_USER_SUCCESS:
       return {

@@ -6,6 +6,10 @@ import {
   ALL_TOUR_REQUEST,
   ALL_TOUR_SUCCESS,
   CLEAR_ERROR,
+  DELETE_USER_TOUR_FAIL,
+  DELETE_USER_TOUR_REQUEST,
+  DELETE_USER_TOUR_RESET,
+  DELETE_USER_TOUR_SUCCESS,
   LIKE_TOUR_FAIL,
   LIKE_TOUR_REQUEST,
   LIKE_TOUR_SUCCESS,
@@ -155,6 +159,41 @@ export const currentUserAllToursReducer = (state = {tours: []}, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const deleteUserTourReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_USER_TOUR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_USER_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
+    case DELETE_USER_TOUR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case DELETE_USER_TOUR_RESET:
+      return {
+        ...state,
+        isDeleted: false,
       };
     case CLEAR_ERROR:
       return {

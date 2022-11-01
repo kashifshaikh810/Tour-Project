@@ -8,7 +8,9 @@ const Home = props => {
   const dispatch = useDispatch();
   const {loading, tours, error} = useSelector(state => state.allTours);
 
-  const {user} = useSelector(state => state.registerUser);
+  const {user, isAuthenticated} = useSelector(state => state.registerUser);
+
+  const [userId, setUserId] = useState('');
 
   const {updatedTour, error: updatedTourError} = useSelector(
     state => state.likeTour,
@@ -46,11 +48,13 @@ const Home = props => {
     dispatch(getTours());
   }, [dispatch, error, updatedTourError, updatedTour]);
 
+  useEffect(() => {
+    setUserId(user?._id);
+  }, [user, isAuthenticated]);
+
   const likeOnPressHandler = item => {
-    if (user?._id) {
-      dispatch(likeTour(item._id));
-      setNoReload(true);
-    }
+    dispatch(likeTour(item._id));
+    setNoReload(true);
   };
 
   return (
@@ -60,7 +64,8 @@ const Home = props => {
       tours={tours}
       updatedTour={updatedTour}
       likeOnPressHandler={likeOnPressHandler}
-      userId={user?._id}
+      userId={userId}
+      isAuthenticated={isAuthenticated}
     />
   );
 };

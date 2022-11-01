@@ -12,8 +12,9 @@ import MyButton from '../../components/MyButton/MyButton';
 import styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import UserIcon from 'react-native-vector-icons/FontAwesome5';
-import {clearErrors, userSignIn} from '../../redux/Action/userAction';
+import {clearErrors, loadUser, userSignIn} from '../../redux/Action/userAction';
 import {SIGNIN_RESET} from '../../redux/Constants/userConstant';
+import {getTours} from '../../redux/Action/tourAction';
 
 const Login = props => {
   const [email, setEmail] = useState('');
@@ -77,6 +78,8 @@ const Login = props => {
     }
 
     if (isLoginSuccess) {
+      dispatch(getTours());
+      dispatch(loadUser());
       props.navigation.navigate('Home');
       setEmail('');
       setPassword('');

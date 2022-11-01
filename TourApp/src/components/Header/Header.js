@@ -12,6 +12,7 @@ import SearchIcon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearErrors, userLogout} from '../../redux/Action/userAction';
 import {LOGOUT_USER_RESET} from '../../redux/Constants/userConstant';
+import {getTours} from '../../redux/Action/tourAction';
 
 const Header = props => {
   const dispatch = useDispatch();
@@ -55,7 +56,11 @@ const Header = props => {
       </View>
 
       <View style={styles.lastContent}>
-        <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(getTours());
+            props.navigation.navigate('Home');
+          }}>
           <Text style={styles.textStyle}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
