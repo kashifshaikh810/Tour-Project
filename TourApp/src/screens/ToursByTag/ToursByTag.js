@@ -22,8 +22,10 @@ const ToursByTag = props => {
       dispatch(clearErrors());
     }
 
-    dispatch(getToursByTagName(tag));
-  }, [dispatch, error]);
+    if (tag) {
+      dispatch(getToursByTagName(tag));
+    }
+  }, [dispatch, error, tag]);
 
   const readMoreOnPressHandler = item => {
     props.navigation.navigate('TourDetail', {
