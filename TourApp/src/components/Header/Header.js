@@ -63,7 +63,8 @@ const Header = props => {
           }}>
           <Text style={styles.textStyle}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('AddUpdateTour')}>
           <Text style={styles.textStyle}>
             {isAuthenticated === false ? 'Login' : 'Add Tour'}
           </Text>
