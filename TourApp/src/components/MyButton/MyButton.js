@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Pressable, ActivityIndicator} from 'react-native';
-import styles from './styles.js';
+import styles from './styles';
 
 const MyButton = props => {
   return (
@@ -11,6 +11,8 @@ const MyButton = props => {
         style={({pressed}) => [
           {...props?.style},
           {backgroundColor: props?.bgColor},
+          pressed ? styles.maxWidth : styles.minWidth,
+          pressed ? styles.maxHeight : styles.minHeight,
         ]}>
         {({pressed}) => (
           <View style={styles.textContainer}>
