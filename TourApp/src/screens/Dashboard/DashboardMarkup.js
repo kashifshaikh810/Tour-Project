@@ -53,9 +53,10 @@ const DashboardMarkup = props => {
                         title="READ MORE"
                         bgColor="rgb(85, 172, 238)"
                         textColor="#fff"
-                        afterPressColor="#f3f3f3"
+                        afterPressColor="#b3b3b3"
                         android_ripple="#f3f3f3"
                         style={styles.button}
+                        isNoEffected={true}
                         onPress={() => props?.readMoreOnPressHandler(item)}
                       />
                       <View style={styles.iconContainer}>
