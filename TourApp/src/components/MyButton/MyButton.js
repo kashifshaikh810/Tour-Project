@@ -11,8 +11,22 @@ const MyButton = props => {
         style={({pressed}) => [
           {...props?.style},
           {backgroundColor: props?.bgColor},
-          pressed ? styles.maxWidth : styles.minWidth,
-          pressed ? styles.maxHeight : styles.minHeight,
+          !props?.isNoEffected &&
+            !props?.isReadMoreButton &&
+            pressed &&
+            styles.maxWidth,
+          !props?.isNoEffected &&
+            !props?.isReadMoreButton &&
+            pressed &&
+            styles.maxHeight,
+          !props?.isNoEffected &&
+            props?.isReadMoreButton &&
+            pressed &&
+            styles.readMoreMaxWidth,
+          !props?.isNoEffected &&
+            props?.isReadMoreButton &&
+            pressed &&
+            styles.readMoreMaxHeight,
         ]}>
         {({pressed}) => (
           <View style={styles.textContainer}>
