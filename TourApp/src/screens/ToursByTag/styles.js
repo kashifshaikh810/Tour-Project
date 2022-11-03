@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   cardContent: tw`flex-row`,
   title: {minWidth: '70%', maxWidth: '70%'},
   marginTop: tw`mt-2 ml-2`,
-  button: tw`w-5/12 p-1 ml-2 mt-2 rounded-xl items-center`,
+  button: tw`w-5/12 h-7 ml-2 mt-3 rounded-full justify-center items-center`,
 });
 
 export default styles;
