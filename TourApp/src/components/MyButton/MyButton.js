@@ -9,7 +9,7 @@ const MyButton = props => {
         onPress={props?.onPress}
         android_ripple={{color: props?.android_ripple}}
         style={({pressed}) => [
-          {...props?.style},
+          props?.isCustomize ? props?.style : {...props?.style},
           {backgroundColor: props?.bgColor},
           !props?.isNoEffected &&
             !props?.isReadMoreButton &&
