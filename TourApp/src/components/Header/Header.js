@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ToastAndroid,
   ActivityIndicator,
@@ -85,10 +84,14 @@ const Header = props => {
             )}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.search}>
-          <Text style={styles.textStyle}>Search</Text>
-          <SearchIcon name="search" size={30} style={styles.textStyle} />
-        </TouchableOpacity>
+        {isAuthenticated === true && (
+          <TouchableOpacity
+            style={styles.search}
+            onPress={() => props?.navigation?.navigate('Search')}>
+            <Text style={styles.textStyle}>Search</Text>
+            <SearchIcon name="search" size={30} style={styles.textStyle} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

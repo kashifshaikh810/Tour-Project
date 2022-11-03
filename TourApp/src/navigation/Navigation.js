@@ -9,6 +9,7 @@ import Home from '../screens/Home/Home';
 import {useSelector} from 'react-redux';
 import Dashboard from '../screens/Dashboard/Dashboard';
 import AddUpdateTour from '../screens/AddUpdateTour/AddUpdateTour';
+import SearchScreen from '../screens/SearchScreen/SearchScreen';
 
 const Navigation = () => {
   const Stack = createNativeStackNavigator();
@@ -31,6 +32,7 @@ const Navigation = () => {
         <Stack.Screen name="TourDetail" component={TourDetail} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="AddUpdateTour" component={AddUpdateTour} />
+        <Stack.Screen name="Search" component={SearchScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
