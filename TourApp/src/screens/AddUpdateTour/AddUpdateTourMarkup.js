@@ -49,26 +49,42 @@ const AddUpdateTourMarkup = props => {
               multiline
               style={[
                 styles.descriptionTextInput,
-                props.titleError !== '' && styles.borderRedColor,
+                props.descriptionError !== '' && styles.borderRedColor,
               ]}
               placeholderTextColor={
-                props.titleError.length > 1 ? 'red' : 'gray'
+                props.descriptionError.length > 1 ? 'red' : 'gray'
               }
-              value={props.title}
-              onChangeText={text => props.titleOnChange(text)}
+              value={props.description}
+              onChangeText={text => props.descriptionOnChange(text)}
             />
-            {props.titleError && (
-              <Text style={styles.errorText}>{props.titleError}</Text>
+            {props.descriptionError && (
+              <Text style={styles.errorText}>{props.descriptionError}</Text>
             )}
           </View>
 
           <View>
+            {props?.tags.length === 0 && (
+              <Text
+                style={[
+                  styles.enterTagPlaceholder,
+                  props.descriptionError.length > 1
+                    ? styles.textRed
+                    : styles.lightGrayText,
+                ]}>
+                Enter tag
+              </Text>
+            )}
             <AutoCompleteTags
               tags={props.tags}
               suggestions={props.suggestions}
-              onChangeTags={props.setTags}
+              onChangeTags={tags => {
+                props?.tagsOnChange(tags);
+              }}
               labelExtractor={props.labelExtractor}
-              containerStyle={styles.tagTextInput}
+              containerStyle={[
+                styles.tagTextInput,
+                props.tagsError !== '' && styles.borderRedColor,
+              ]}
               renderTag={(tag, i, aa) => (
                 <View style={styles.tagsContainer}>
                   <Text style={styles.tag}>{tag}</Text>
@@ -83,21 +99,61 @@ const AddUpdateTourMarkup = props => {
                 </View>
               )}
             />
+            {props?.tagsError && (
+              <Text style={styles.errorText}>{props?.tagsError}</Text>
+            )}
           </View>
 
           <View>
             <View style={styles.noFileContainer}>
-              <Text style={styles.noFile}>No file Chosen</Text>
+              <Text
+                style={[
+                  styles.noFile,
+                  props?.showChosenImage && styles.lightGrayText,
+                ]}>
+                {props?.showChosenImage
+                  ? props?.showChosenImage
+                  : 'No file Chosen'}
+              </Text>
+              {props?.showChosenImage && (
+                <TouchableOpacity onPress={() => props?.removeImageFile()}>
+                  <CloseIcon
+                    name="close-circle-sharp"
+                    size={25}
+                    style={styles.closeIcon}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
             <MyButton
               {...props}
               title="Choose file"
-              textColor="gray"
-              afterPressColor="#fff"
-              android_ripple="#b3b3b3"
-              style={styles.chooseFileButton}
+              textColor={props.imageError.length > 1 ? '#F93154' : 'gray'}
+              afterPressColor={
+                props?.imageError.length > 1 ? '#F93154' : '#fff'
+              }
+              android_ripple={
+                props?.imageError.length > 1 ? '#F93154' : '#b3b3b3'
+              }
+              style={[
+                styles.chooseFileButton,
+                !props?.imageError && styles.marginBottom,
+                props?.imageError !== ''
+                  ? styles.borderRedColor
+                  : styles.borderGrayColor,
+              ]}
+              isCustomize={true}
               onPress={() => props?.chooseFile()}
             />
+            {props?.imageError && (
+              <Text
+                style={[
+                  styles.errorText,
+                  props?.tagsError && styles.marginBottom,
+                ]}>
+                {props?.imageError}
+              </Text>
+            )}
           </View>
 
           <View>
@@ -109,7 +165,7 @@ const AddUpdateTourMarkup = props => {
               afterPressColor="#b3b3b3"
               android_ripple="#f3f3f3"
               style={styles.button}
-              onPress={() => {}}
+              onPress={() => props?.submitOnPressHandler()}
             />
           </View>
 
