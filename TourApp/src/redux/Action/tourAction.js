@@ -19,6 +19,9 @@ import {
   DELETE_USER_TOUR_REQUEST,
   DELETE_USER_TOUR_SUCCESS,
   DELETE_USER_TOUR_FAIL,
+  ADD_NEW_TOUR_REQUEST,
+  ADD_NEW_TOUR_SUCCESS,
+  ADD_NEW_TOUR_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -135,8 +138,6 @@ export const deleteUserTour = id => async dispatch => {
   try {
     dispatch({type: DELETE_USER_TOUR_REQUEST});
 
-    const config = {headers: {'Content-Type': 'application/json'}};
-
     const url = `http://192.168.100.8:5000/tour/${id}`;
 
     const {data} = await axios.delete(url);
@@ -148,6 +149,28 @@ export const deleteUserTour = id => async dispatch => {
   } catch (error) {
     dispatch({
       type: DELETE_USER_TOUR_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const addTour = newTourData => async dispatch => {
+  try {
+    dispatch({type: ADD_NEW_TOUR_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = `http://192.168.100.8:5000/tour`;
+
+    const {data} = await axios.post(url, newTourData, config);
+
+    dispatch({
+      type: ADD_NEW_TOUR_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADD_NEW_TOUR_FAIL,
       payload: error?.response?.data?.message,
     });
   }

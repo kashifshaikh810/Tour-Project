@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {userReducer} from './Reducer/userReducer';
 import {
+  addTourReducer,
   currentUserAllToursReducer,
   deleteUserTourReducer,
   likeTourReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   likeTour: likeTourReducer,
   currentUserTours: currentUserAllToursReducer,
   deleteTour: deleteUserTourReducer,
+  addNewTour: addTourReducer,
 });
 
 let initialState = {};

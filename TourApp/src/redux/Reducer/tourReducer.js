@@ -1,4 +1,8 @@
 import {
+  ADD_NEW_TOUR_FAIL,
+  ADD_NEW_TOUR_REQUEST,
+  ADD_NEW_TOUR_RESET,
+  ADD_NEW_TOUR_SUCCESS,
   ALL_CURRENT_USER_TOUR_FAIL,
   ALL_CURRENT_USER_TOUR_REQUEST,
   ALL_CURRENT_USER_TOUR_SUCCESS,
@@ -194,6 +198,41 @@ export const deleteUserTourReducer = (state = {}, action) => {
       return {
         ...state,
         isDeleted: false,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const addTourReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ADD_NEW_TOUR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ADD_NEW_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload,
+      };
+    case ADD_NEW_TOUR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case ADD_NEW_TOUR_RESET:
+      return {
+        ...state,
+        success: false,
       };
     case CLEAR_ERROR:
       return {

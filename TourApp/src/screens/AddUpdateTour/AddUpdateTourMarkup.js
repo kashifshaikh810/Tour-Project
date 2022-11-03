@@ -28,16 +28,16 @@ const AddUpdateTourMarkup = props => {
               keyboardType="default"
               style={[
                 styles.textInput,
-                props.titleError !== '' && styles.borderRedColor,
+                props?.titleError !== '' && styles.borderRedColor,
               ]}
               placeholderTextColor={
-                props.titleError.length > 1 ? 'red' : 'gray'
+                props?.titleError?.length > 1 ? 'red' : 'gray'
               }
               value={props.title}
               onChangeText={text => props.titleOnChange(text)}
             />
-            {props.titleError && (
-              <Text style={styles.errorText}>{props.titleError}</Text>
+            {props?.titleError && (
+              <Text style={styles.errorText}>{props?.titleError}</Text>
             )}
           </View>
 
@@ -67,7 +67,7 @@ const AddUpdateTourMarkup = props => {
               <Text
                 style={[
                   styles.enterTagPlaceholder,
-                  props.descriptionError.length > 1
+                  props.tagsError.length > 1
                     ? styles.textRed
                     : styles.lightGrayText,
                 ]}>
@@ -78,7 +78,9 @@ const AddUpdateTourMarkup = props => {
               tags={props.tags}
               suggestions={props.suggestions}
               onChangeTags={tags => {
-                props?.tagsOnChange(tags);
+                if (props?.tags.length <= 4) {
+                  props?.tagsOnChange(tags);
+                }
               }}
               labelExtractor={props.labelExtractor}
               containerStyle={[
@@ -144,6 +146,7 @@ const AddUpdateTourMarkup = props => {
               ]}
               isCustomize={true}
               onPress={() => props?.chooseFile()}
+              loading={false}
             />
             {props?.imageError && (
               <Text
@@ -166,6 +169,7 @@ const AddUpdateTourMarkup = props => {
               android_ripple="#f3f3f3"
               style={styles.button}
               onPress={() => props?.submitOnPressHandler()}
+              loading={props?.loading}
             />
           </View>
 
@@ -178,7 +182,8 @@ const AddUpdateTourMarkup = props => {
               afterPressColor="#b3b3b3"
               android_ripple="#f3f3f3"
               style={styles.button}
-              onPress={() => {}}
+              onPress={() => props?.clearOnPressHandler()}
+              loading={false}
             />
           </View>
         </View>
