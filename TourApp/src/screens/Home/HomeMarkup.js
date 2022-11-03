@@ -88,25 +88,13 @@ const HomeMarkup = props => {
                 <View style={styles.flexRow}>
                   <Text numberOfLines={2} style={styles.description}>
                     {item.description}
-                    {item.description.length < 40 && (
-                      <TouchableOpacity
-                        onPress={() =>
-                          props.navigation.navigate('TourDetail', {
-                            id: item._id,
-                          })
-                        }>
-                        <Text style={styles.readMore}>Read More</Text>
-                      </TouchableOpacity>
-                    )}
                   </Text>
-                  {item.description.length < 30 ? null : (
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.navigation.navigate('TourDetail', {id: item._id})
-                      }>
-                      <Text style={styles.readMore}>Read More</Text>
-                    </TouchableOpacity>
-                  )}
+                  <TouchableOpacity
+                    onPress={() =>
+                      props.navigation.navigate('TourDetail', {id: item._id})
+                    }>
+                    <Text style={styles.readMore}>Read More</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
