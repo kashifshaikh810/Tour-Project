@@ -25,7 +25,7 @@ export const getTours = () => async dispatch => {
   try {
     dispatch({type: ALL_TOUR_REQUEST});
 
-    const url = 'http://192.168.100.4:5000/tour';
+    const url = 'http://192.168.100.8:5000/tour';
 
     const {data} = await axios.get(url);
 
@@ -45,7 +45,7 @@ export const getToursByTagName = tag => async dispatch => {
   try {
     dispatch({type: TOURS_BY_TAG_REQUEST});
 
-    const url = `http://192.168.100.4:5000/tour/tag/${tag}`;
+    const url = `http://192.168.100.8:5000/tour/tag/${tag}`;
 
     const {data} = await axios.get(url);
 
@@ -65,7 +65,7 @@ export const getTourDetail = id => async dispatch => {
   try {
     dispatch({type: TOUR_DETAIL_REQUEST});
 
-    const url = `http://192.168.100.4:5000/tour/${id}`;
+    const url = `http://192.168.100.8:5000/tour/${id}`;
 
     const {data} = await axios.get(url);
 
@@ -87,7 +87,7 @@ export const likeTour = id => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    const url = `http://192.168.100.4:5000/tour/likeTour/${id}`;
+    const url = `http://192.168.100.8:5000/tour/likeTour/${id}`;
 
     const {data} = await axios.put(url, config);
 
@@ -115,7 +115,7 @@ export const getCurrentUserTour = id => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    const url = `http://192.168.100.4:5000/tour/userTours/${id}`;
+    const url = `http://192.168.100.8:5000/tour/userTours/${id}`;
 
     const {data} = await axios.get(url, config);
 
@@ -137,7 +137,7 @@ export const deleteUserTour = id => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    const url = `http://192.168.100.4:5000/tour/${id}`;
+    const url = `http://192.168.100.8:5000/tour/${id}`;
 
     const {data} = await axios.delete(url);
 

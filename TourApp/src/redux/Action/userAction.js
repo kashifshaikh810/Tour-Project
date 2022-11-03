@@ -21,7 +21,7 @@ export const userSignUp = registerData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    const url = 'http://192.168.100.4:5000/users/signup';
+    const url = 'http://192.168.100.8:5000/users/signup';
 
     const {data} = await axios.post(url, registerData, config);
 
@@ -43,7 +43,7 @@ export const userSignIn = signInData => async dispatch => {
 
     const config = {headers: {'Content-Type': 'application/json'}};
 
-    const url = 'http://192.168.100.4:5000/users/signin';
+    const url = 'http://192.168.100.8:5000/users/signin';
 
     const {data} = await axios.post(url, signInData, config);
 
@@ -64,7 +64,7 @@ export const loadUser = () => async dispatch => {
   try {
     dispatch({type: LOAD_USER_REQUEST});
 
-    const url = 'http://192.168.100.4:5000/users/me';
+    const url = 'http://192.168.100.8:5000/users/me';
 
     const {data} = await axios.get(url);
 
@@ -84,7 +84,7 @@ export const userLogout = () => async dispatch => {
   try {
     dispatch({type: LOGOUT_USER_REQUEST});
 
-    const url = 'http://192.168.100.4:5000/users/logout';
+    const url = 'http://192.168.100.8:5000/users/logout';
 
     const {data} = await axios.get(url);
 
