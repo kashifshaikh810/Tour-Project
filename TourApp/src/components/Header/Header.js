@@ -51,36 +51,31 @@ const Header = props => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.tourTextStyle}>Tour</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(getTours());
+          props.navigation.navigate('Home');
+        }}>
+        <Text style={styles.textStyle}>Home</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          isAuthenticated === false
+            ? props.navigation.navigate('Login')
+            : props.navigation.navigate('AddUpdateTour')
+        }>
+        <Text style={styles.textStyle}>
+          {isAuthenticated === false ? 'Login' : 'Add Tour'}
+        </Text>
+      </TouchableOpacity>
 
-      <View style={styles.lastContent}>
-        <TouchableOpacity
-          onPress={() => {
-            dispatch(getTours());
-            props.navigation.navigate('Home');
-          }}>
-          <Text style={styles.textStyle}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            isAuthenticated === false
-              ? props.navigation.navigate('Login')
-              : props.navigation.navigate('AddUpdateTour')
-          }>
-          <Text style={styles.textStyle}>
-            {isAuthenticated === false ? 'Login' : 'Add Tour'}
-          </Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={() => props.navigation.navigate('Dashboard')}>
+        <Text style={styles.textStyle}>
+          {isAuthenticated === true && 'Dashboard'}
+        </Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate('Dashboard')}>
-          <Text style={styles.textStyle}>
-            {isAuthenticated === true && 'Dashboard'}
-          </Text>
-        </TouchableOpacity>
-
+      <View style={styles.logOutContainer}>
         <TouchableOpacity onPress={() => logout()}>
           <Text style={styles.textStyle}>
             {loading && isAuthenticated === true ? (
@@ -90,11 +85,10 @@ const Header = props => {
             )}
           </Text>
         </TouchableOpacity>
-
-        {/* <TextInput placeholder="Search Tour" style={styles.input} />
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.search}>
+          <Text style={styles.textStyle}>Search</Text>
           <SearchIcon name="search" size={30} style={styles.textStyle} />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     </View>
   );
