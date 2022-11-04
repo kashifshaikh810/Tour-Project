@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
-import SearchIcon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearErrors, userLogout} from '../../redux/Action/userAction';
 import {LOGOUT_USER_RESET} from '../../redux/Constants/userConstant';
@@ -87,9 +86,11 @@ const Header = props => {
         {isAuthenticated === true && (
           <TouchableOpacity
             style={styles.search}
-            onPress={() => props?.navigation?.navigate('Search')}>
+            onPress={() => {
+              dispatch(getTours());
+              props?.navigation?.navigate('Search');
+            }}>
             <Text style={styles.textStyle}>Search</Text>
-            <SearchIcon name="search" size={30} style={styles.textStyle} />
           </TouchableOpacity>
         )}
       </View>
