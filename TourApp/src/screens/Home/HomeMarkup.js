@@ -78,10 +78,6 @@ const HomeMarkup = props => {
                   </>
                 )}
               </TouchableOpacity>
-              {console.log(
-                item?.likes.find(like => like === props?.userId),
-                'dd',
-              )}
 
               <View style={styles.titleAndDescriptionContainer}>
                 <Text style={styles.title}>{item.title}</Text>
