@@ -7,11 +7,14 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  ImageBackground,
+  Pressable,
 } from 'react-native';
 import styles from './styles';
 import Header from '../../components/Header/Header';
 import EditIcon from 'react-native-vector-icons/FontAwesome5';
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import EditProfileIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyButton from '../../components/MyButton/MyButton';
 
 const DashboardMarkup = props => {
@@ -19,8 +22,34 @@ const DashboardMarkup = props => {
     <View style={styles.container}>
       <Header {...props} />
 
+      <ImageBackground
+        source={{uri: 'https://picsum.photos/seed/picsum/200/300'}}
+        style={styles.profileImage}
+        resizeMode="center"
+        imageStyle={styles.imageStyle}>
+        <View style={styles.profileEditIconContainer}>
+          <Pressable
+            style={({pressed}) => [
+              styles.EditProfileIcon,
+              {
+                backgroundColor: pressed
+                  ? 'rgba(0,0,0,0.700)'
+                  : 'rgba(0,0,0,0.500)',
+              },
+            ]}>
+            {({pressed}) => (
+              <EditProfileIcon
+                name="account-edit-outline"
+                color={pressed ? '#fff' : '#b3b3b3'}
+                size={30}
+              />
+            )}
+          </Pressable>
+        </View>
+      </ImageBackground>
+
       <View style={styles.headingContainer}>
-        <Text style={styles.heading}>Dashboard: {props?.name}</Text>
+        <Text style={styles.heading}>{props?.name}</Text>
       </View>
 
       <ScrollView style={styles.scrollView}>
