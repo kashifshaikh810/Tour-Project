@@ -25,6 +25,9 @@ import {
   SEARCH_TOUR_REQUEST,
   SEARCH_TOUR_SUCCESS,
   SEARCH_TOUR_FAIL,
+  UPDATE_TOUR_REQUEST,
+  UPDATE_TOUR_SUCCESS,
+  UPDATE_TOUR_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -194,6 +197,28 @@ export const searchTour = searchQuery => async dispatch => {
   } catch (error) {
     dispatch({
       type: SEARCH_TOUR_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const updateTour = (id, updateTourData) => async dispatch => {
+  try {
+    dispatch({type: UPDATE_TOUR_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = `http://192.168.100.8:5000/tour/${id}`;
+
+    const {data} = await axios.put(url, updateTourData, config);
+
+    dispatch({
+      type: UPDATE_TOUR_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_TOUR_FAIL,
       payload: error?.response?.data?.message,
     });
   }

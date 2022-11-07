@@ -26,6 +26,10 @@ import {
   TOUR_DETAIL_FAIL,
   TOUR_DETAIL_REQUEST,
   TOUR_DETAIL_SUCCESS,
+  UPDATE_TOUR_FAIL,
+  UPDATE_TOUR_REQUEST,
+  UPDATE_TOUR_RESET,
+  UPDATE_TOUR_SUCCESS,
 } from '../Constants/tourConstant';
 
 export const tourReducer = (state = {tours: []}, action) => {
@@ -239,6 +243,41 @@ export const addTourReducer = (state = {}, action) => {
       return {
         ...state,
         success: false,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateTourReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_TOUR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
+    case UPDATE_TOUR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case UPDATE_TOUR_RESET:
+      return {
+        ...state,
+        isUpdated: false,
       };
     case CLEAR_ERROR:
       return {

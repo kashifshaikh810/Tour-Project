@@ -3,18 +3,24 @@ import AddUpdateTourMarkup from './AddUpdateTourMarkup';
 import DocumentPicker from 'react-native-document-picker';
 import ImgToBase64 from 'react-native-image-base64';
 import {useDispatch, useSelector} from 'react-redux';
-import {addTour, clearErrors} from '../../redux/Action/tourAction';
+import {
+  addTour,
+  clearErrors,
+  getCurrentUserTour,
+  getTours,
+  updateTour,
+} from '../../redux/Action/tourAction';
 import {ToastAndroid} from 'react-native';
-import {ADD_NEW_TOUR_RESET} from '../../redux/Constants/tourConstant';
+import {
+  ADD_NEW_TOUR_RESET,
+  UPDATE_TOUR_RESET,
+} from '../../redux/Constants/tourConstant';
 
 const AddUpdateTour = props => {
   let idParam = props?.route?.params?.id;
+  let creatorId = props?.route?.params?.creator;
 
-  const {
-    loading: toursLoading,
-    tours,
-    error: toursError,
-  } = useSelector(state => state.allTours);
+  const {tours} = useSelector(state => state.allTours);
 
   const singleTour =
     idParam && tours && tours.find(tour => tour?._id === idParam);
@@ -28,13 +34,21 @@ const AddUpdateTour = props => {
   const [showChosenImage, setShowChosenImage] = useState('');
   const [tags, setTags] = useState(singleTour ? singleTour?.tags : []);
   const [tagsError, setTagsError] = useState('');
-  const [imageFile, setImageFile] = useState('');
+  const [imageFile, setImageFile] = useState(
+    singleTour ? singleTour?.imageFile : '',
+  );
   const [imageError, setImageError] = useState('');
 
   const suggestions = ['apple', 'orange', 'banana', 'kiwi'];
 
   const dispatch = useDispatch();
   const {loading, success, error} = useSelector(state => state.addNewTour);
+
+  const {
+    loading: updateLoading,
+    isUpdated,
+    error: updateError,
+  } = useSelector(state => state.updatedTour);
 
   const labelExtractor = tag => {};
 
@@ -131,6 +145,34 @@ const AddUpdateTour = props => {
     );
   };
 
+  const updateOnPressHandler = () => {
+    if (!title) {
+      setTitleError('Please provide your tour title');
+    }
+
+    if (!description) {
+      setDescriptionError('Please provide your tour description');
+    }
+
+    if (tags.length === 0) {
+      setTagsError('Please provide your tour tags');
+    }
+
+    if (!imageFile) {
+      setImageError('Please provide your tour image');
+    }
+
+    if (title && description && tags.length >= 1 && imageFile) {
+      const data = {
+        title,
+        description,
+        tags,
+        imageFile,
+      };
+      dispatch(updateTour(idParam, data));
+    }
+  };
+
   useEffect(() => {
     if (!idParam) {
       setTitle('');
@@ -155,6 +197,17 @@ const AddUpdateTour = props => {
       dispatch(clearErrors());
     }
 
+    if (updateError) {
+      ToastAndroid.showWithGravityAndOffset(
+        updateError,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch(clearErrors());
+    }
+
     if (success) {
       ToastAndroid.showWithGravityAndOffset(
         'Tour Added Succeed',
@@ -171,7 +224,26 @@ const AddUpdateTour = props => {
       props?.navigation.navigate('Dashboard');
       dispatch({type: ADD_NEW_TOUR_RESET});
     }
-  }, [dispatch, error, success, idParam]);
+
+    if (isUpdated) {
+      dispatch(getCurrentUserTour(creatorId));
+      dispatch(getTours());
+      ToastAndroid.showWithGravityAndOffset(
+        'Tour Updated Succeed',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      setTitle('');
+      setDescription('');
+      setTags([]);
+      setImageFile('');
+      setShowChosenImage('');
+      props?.navigation.navigate('Dashboard', {noReload: true});
+      dispatch({type: UPDATE_TOUR_RESET});
+    }
+  }, [dispatch, error, success, idParam, updateError, isUpdated, creatorId]);
 
   return (
     <AddUpdateTourMarkup
@@ -199,9 +271,10 @@ const AddUpdateTour = props => {
       tagsOnChange={tagsOnChange}
       imageError={imageError}
       removeImageFile={removeImageFile}
-      loading={loading}
+      loading={loading ? loading : updateLoading}
       clearOnPressHandler={clearOnPressHandler}
       id={idParam}
+      updateOnPressHandler={updateOnPressHandler}
     />
   );
 };

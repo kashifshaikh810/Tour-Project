@@ -14,6 +14,7 @@ import {
   tourDetailReducer,
   tourReducer,
   toursByTagReducer,
+  updateTourReducer,
 } from './Reducer/tourReducer';
 
 const reducer = combineReducers({
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   currentUserTours: currentUserAllToursReducer,
   deleteTour: deleteUserTourReducer,
   addNewTour: addTourReducer,
+  updatedTour: updateTourReducer,
 });
 
 let initialState = {};

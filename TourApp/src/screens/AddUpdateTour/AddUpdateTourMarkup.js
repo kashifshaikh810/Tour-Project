@@ -170,7 +170,11 @@ const AddUpdateTourMarkup = props => {
               afterPressColor="#b3b3b3"
               android_ripple="#f3f3f3"
               style={styles.button}
-              onPress={() => props?.submitOnPressHandler()}
+              onPress={() =>
+                props?.id
+                  ? props?.updateOnPressHandler()
+                  : props?.submitOnPressHandler()
+              }
               loading={props?.loading}
             />
           </View>
