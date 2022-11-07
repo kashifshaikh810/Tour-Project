@@ -20,7 +20,9 @@ const AddUpdateTourMarkup = props => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          <Text style={styles.addTour}>Add Tour</Text>
+          <Text style={styles.addTour}>
+            {props?.id ? 'Update Tour' : 'Add Tour'}
+          </Text>
 
           <View>
             <TextInput
@@ -162,7 +164,7 @@ const AddUpdateTourMarkup = props => {
           <View>
             <MyButton
               {...props}
-              title="SUBMIT"
+              title={props?.id ? 'UPDATE' : 'SUBMIT'}
               bgColor="#1266F1"
               textColor="#fff"
               afterPressColor="#b3b3b3"
