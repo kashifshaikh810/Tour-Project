@@ -11,6 +11,7 @@ import {DELETE_USER_TOUR_RESET} from '../../redux/Constants/tourConstant';
 import DashboardMarkup from './DashboardMarkup';
 
 const Dashboard = props => {
+  let noReload = props?.route?.params?.noReload;
   const dispatch = useDispatch();
   const {user} = useSelector(state => state.registerUser);
   const {loading, tours, error} = useSelector(state => state.currentUserTours);
@@ -76,14 +77,17 @@ const Dashboard = props => {
   };
 
   const updateTourHandler = item => {
-    props?.navigation?.navigate('AddUpdateTour', {id: item?._id});
+    props?.navigation?.navigate('AddUpdateTour', {
+      id: item?._id,
+      creator: item?.creator,
+    });
   };
 
   return (
     <DashboardMarkup
       {...props}
       name={user?.name}
-      loading={noReloading ? false : loading}
+      loading={noReloading || noReload ? false : loading}
       deleteLoading={deleteLoading}
       tours={tours}
       readMoreOnPressHandler={readMoreOnPressHandler}
