@@ -21,7 +21,7 @@ const TourDetailMarkup = props => {
           </View>
 
           <View style={styles.iconAndTitleContainer}>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => props.navigation.goBack()}>
               <BackIcon
                 name="chevron-back"
                 size={25}
