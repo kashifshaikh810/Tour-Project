@@ -8,17 +8,28 @@ import {ToastAndroid} from 'react-native';
 import {ADD_NEW_TOUR_RESET} from '../../redux/Constants/tourConstant';
 
 const AddUpdateTour = props => {
-  const [title, setTitle] = useState('');
+  let idParam = props?.route?.params?.id;
+
+  const {
+    loading: toursLoading,
+    tours,
+    error: toursError,
+  } = useSelector(state => state.allTours);
+
+  const singleTour =
+    idParam && tours && tours.find(tour => tour?._id === idParam);
+
+  const [title, setTitle] = useState(singleTour ? singleTour?.title : '');
   const [titleError, setTitleError] = useState('');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(
+    singleTour ? singleTour?.description : '',
+  );
   const [descriptionError, setDescriptionError] = useState('');
   const [showChosenImage, setShowChosenImage] = useState('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(singleTour ? singleTour?.tags : []);
   const [tagsError, setTagsError] = useState('');
   const [imageFile, setImageFile] = useState('');
   const [imageError, setImageError] = useState('');
-
-  let idParam = props?.route?.params?.id;
 
   const suggestions = ['apple', 'orange', 'banana', 'kiwi'];
 
@@ -121,6 +132,18 @@ const AddUpdateTour = props => {
   };
 
   useEffect(() => {
+    if (!idParam) {
+      setTitle('');
+      setTitleError('');
+      setDescription('');
+      setDescriptionError('');
+      setImageError('');
+      setShowChosenImage('');
+      setImageFile('');
+      setTags([]);
+      setTagsError('');
+    }
+
     if (error) {
       ToastAndroid.showWithGravityAndOffset(
         error,
@@ -148,7 +171,7 @@ const AddUpdateTour = props => {
       props?.navigation.navigate('Dashboard');
       dispatch({type: ADD_NEW_TOUR_RESET});
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success, idParam]);
 
   return (
     <AddUpdateTourMarkup
