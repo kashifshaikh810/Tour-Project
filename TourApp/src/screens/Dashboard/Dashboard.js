@@ -75,6 +75,10 @@ const Dashboard = props => {
     dispatch(deleteUserTour(item?._id));
   };
 
+  const updateTourHandler = item => {
+    props?.navigation?.navigate('AddUpdateTour', {id: item?._id});
+  };
+
   return (
     <DashboardMarkup
       {...props}
@@ -85,6 +89,7 @@ const Dashboard = props => {
       readMoreOnPressHandler={readMoreOnPressHandler}
       deleteTourOnPressHandler={deleteTourOnPressHandler}
       showLoaderOnlyOneCard={showLoaderOnlyOneCard}
+      updateTourHandler={updateTourHandler}
     />
   );
 };
