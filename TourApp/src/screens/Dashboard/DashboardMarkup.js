@@ -74,7 +74,12 @@ const DashboardMarkup = props => {
                             />
                           )}
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() =>
+                            props?.navigation.navigate('AddUpdateTour', {
+                              id: item?.creator,
+                            })
+                          }>
                           <EditIcon
                             name="edit"
                             color="rgb(85, 172, 238)"
