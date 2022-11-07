@@ -2,7 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {ToastAndroid} from 'react-native';
 import SearchScreenMarkup from './SearchScreenMarkup';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearErrors, getTours, likeTour} from '../../redux/Action/tourAction';
+import {
+  clearErrors,
+  getTours,
+  likeTour,
+  searchTour,
+} from '../../redux/Action/tourAction';
 
 const SearchScreen = props => {
   const dispatch = useDispatch();
@@ -19,6 +24,7 @@ const SearchScreen = props => {
 
   const [search, setSearch] = useState('');
   const [searchError, setSearchError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const searchOnChange = text => {
     setSearch(text);
@@ -28,6 +34,15 @@ const SearchScreen = props => {
   const searchOnPressHandler = () => {
     if (!search) {
       setSearchError('Please give the tour title');
+    }
+
+    if (search) {
+      setSearchQuery(search);
+    }
+
+    if (search) {
+      dispatch(searchTour(search));
+      setSearch('');
     }
   };
 
@@ -85,6 +100,7 @@ const SearchScreen = props => {
       likeOnPressHandler={likeOnPressHandler}
       userId={userId}
       isAuthenticated={isAuthenticated}
+      searchQuery={searchQuery}
     />
   );
 };

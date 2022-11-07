@@ -17,6 +17,9 @@ import {
   LIKE_TOUR_FAIL,
   LIKE_TOUR_REQUEST,
   LIKE_TOUR_SUCCESS,
+  SEARCH_TOUR_FAIL,
+  SEARCH_TOUR_REQUEST,
+  SEARCH_TOUR_SUCCESS,
   TOURS_BY_TAG_FAIL,
   TOURS_BY_TAG_REQUEST,
   TOURS_BY_TAG_SUCCESS,
@@ -27,17 +30,20 @@ import {
 
 export const tourReducer = (state = {tours: []}, action) => {
   switch (action.type) {
+    case SEARCH_TOUR_REQUEST:
     case ALL_TOUR_REQUEST:
       return {
         ...state,
         loading: true,
       };
+    case SEARCH_TOUR_SUCCESS:
     case ALL_TOUR_SUCCESS:
       return {
         ...state,
         loading: false,
         tours: action.payload,
       };
+    case SEARCH_TOUR_FAIL:
     case ALL_TOUR_FAIL:
       return {
         ...state,

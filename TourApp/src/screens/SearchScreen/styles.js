@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   flexRow: tw`flex-row items-center`,
   readMore: tw`text-blue-600 pt-6 text-base`,
   loader: tw`mt-5`,
+  notFound: tw`ml-4 w-11/12`,
 });
 
 export default styles;

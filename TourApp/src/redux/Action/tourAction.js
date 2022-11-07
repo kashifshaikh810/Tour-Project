@@ -22,6 +22,9 @@ import {
   ADD_NEW_TOUR_REQUEST,
   ADD_NEW_TOUR_SUCCESS,
   ADD_NEW_TOUR_FAIL,
+  SEARCH_TOUR_REQUEST,
+  SEARCH_TOUR_SUCCESS,
+  SEARCH_TOUR_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -171,6 +174,26 @@ export const addTour = newTourData => async dispatch => {
   } catch (error) {
     dispatch({
       type: ADD_NEW_TOUR_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const searchTour = searchQuery => async dispatch => {
+  try {
+    dispatch({type: SEARCH_TOUR_REQUEST});
+
+    const url = `http://192.168.100.8:5000/tour/search?searchQuery=${searchQuery}`;
+
+    const {data} = await axios.get(url);
+
+    dispatch({
+      type: SEARCH_TOUR_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SEARCH_TOUR_FAIL,
       payload: error?.response?.data?.message,
     });
   }

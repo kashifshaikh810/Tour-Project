@@ -52,6 +52,14 @@ const SearchScreenMarkup = props => {
         )}
       </View>
 
+      {props?.tours.length === 0 && !props?.search && (
+        <View>
+          <Text style={styles.notFound}>
+            We couldn't find any matches for "{props?.searchQuery}"
+          </Text>
+        </View>
+      )}
+
       {props?.loading ? (
         <ActivityIndicator size={30} color="gray" style={styles.loader} />
       ) : (
