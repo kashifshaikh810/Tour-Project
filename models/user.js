@@ -23,6 +23,9 @@ const userSchema = mongoose.Schema({
   token: {
     type: String,
   },
+  imageProfile: {
+    type: String,
+  },
 });
 
 export default mongoose.model("User", userSchema);

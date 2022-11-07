@@ -72,3 +72,22 @@ export const logout = catchAsyncError(async (req, res, next) => {
     success: true,
   });
 });
+
+export const updateProfile = catchAsyncError(async (req, res, next) => {
+  const { firstName, lastName, email, imageProfile } = req.body;
+
+  const data = {
+    email,
+    name: `${firstName} ${lastName}`,
+    imageProfile,
+  };
+
+  const user = await UserModel.findByIdAndUpdate({ _id: req.user._id }, data, {
+    new: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
