@@ -18,6 +18,8 @@ const AddUpdateTour = props => {
   const [imageFile, setImageFile] = useState('');
   const [imageError, setImageError] = useState('');
 
+  let idParam = props?.route?.params?.id;
+
   const suggestions = ['apple', 'orange', 'banana', 'kiwi'];
 
   const dispatch = useDispatch();
@@ -176,6 +178,7 @@ const AddUpdateTour = props => {
       removeImageFile={removeImageFile}
       loading={loading}
       clearOnPressHandler={clearOnPressHandler}
+      id={idParam}
     />
   );
 };
