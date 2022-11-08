@@ -23,12 +23,17 @@ const DashboardMarkup = props => {
       <Header {...props} />
 
       <ImageBackground
-        source={{uri: 'https://picsum.photos/seed/picsum/200/300'}}
+        source={{
+          uri: props?.user?.imageProfile
+            ? props?.user?.imageProfile
+            : 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=338&ext=jpg&uid=R24724804&ga=GA1.2.35158520.1667836829',
+        }}
         style={styles.profileImage}
         resizeMode="center"
         imageStyle={styles.imageStyle}>
         <View style={styles.profileEditIconContainer}>
           <Pressable
+            onPress={() => props?.navigation.navigate('Profile')}
             style={({pressed}) => [
               styles.EditProfileIcon,
               {
@@ -49,7 +54,7 @@ const DashboardMarkup = props => {
       </ImageBackground>
 
       <View style={styles.headingContainer}>
-        <Text style={styles.heading}>{props?.name}</Text>
+        <Text style={styles.heading}>{props?.user?.name}</Text>
       </View>
 
       <ScrollView style={styles.scrollView}>

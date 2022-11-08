@@ -86,7 +86,7 @@ const Dashboard = props => {
   return (
     <DashboardMarkup
       {...props}
-      name={user?.name}
+      user={user}
       loading={noReloading || noReload ? false : loading}
       deleteLoading={deleteLoading}
       tours={tours}
