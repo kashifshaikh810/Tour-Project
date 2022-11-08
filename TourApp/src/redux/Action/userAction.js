@@ -13,6 +13,9 @@ import {
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
 } from '../Constants/userConstant';
 
 export const userSignUp = registerData => async dispatch => {
@@ -47,7 +50,6 @@ export const userSignIn = signInData => async dispatch => {
 
     const {data} = await axios.post(url, signInData, config);
 
-    console.log(data, 'data');
     dispatch({
       type: SIGNIN_SUCCESS,
       payload: data,
@@ -104,4 +106,26 @@ export const clearErrors = () => dispatch => {
   dispatch({
     type: CLEAR_ERROR,
   });
+};
+
+export const updateProfile = profileData => async dispatch => {
+  try {
+    dispatch({type: UPDATE_USER_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = 'http://192.168.100.8:5000/users/profile';
+
+    const {data} = await axios.put(url, profileData, config);
+
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
 };

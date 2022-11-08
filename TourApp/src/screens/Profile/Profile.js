@@ -1,11 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProfileMarkup from './ProfileMarkup';
 import DocumentPicker from 'react-native-document-picker';
 import ImgToBase64 from 'react-native-image-base64';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {ToastAndroid} from 'react-native';
+import {
+  clearErrors,
+  loadUser,
+  updateProfile,
+} from '../../redux/Action/userAction';
+import {UPDATE_USER_RESET} from '../../redux/Constants/userConstant';
 
 const Profile = props => {
+  const dispatch = useDispatch();
+
   const {user} = useSelector(state => state.registerUser);
+  const {loading, isUpdated, error} = useSelector(state => state.profile);
 
   let fistNameAndLastName = user && user?.name?.split(' ');
 
@@ -93,10 +103,37 @@ const Profile = props => {
         firstName,
         lastName,
         email,
+        imageProfile,
       };
-      console.log(data);
+      dispatch(updateProfile(data));
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      ToastAndroid.showWithGravityAndOffset(
+        error,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch(clearErrors());
+    }
+
+    if (isUpdated) {
+      dispatch(loadUser());
+      props?.navigation.navigate('Dashboard');
+      ToastAndroid.showWithGravityAndOffset(
+        'Profile Updated Succeed',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch({type: UPDATE_USER_RESET});
+    }
+  }, [dispatch, error, isUpdated]);
 
   return (
     <ProfileMarkup
@@ -115,6 +152,7 @@ const Profile = props => {
       updateOnPressHandler={updateOnPressHandler}
       imageProfileError={imageProfileError}
       user={user}
+      loading={loading}
     />
   );
 };

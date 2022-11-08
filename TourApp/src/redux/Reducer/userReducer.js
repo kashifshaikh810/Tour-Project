@@ -15,6 +15,10 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_RESET,
   SIGNUP_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_RESET,
+  UPDATE_USER_SUCCESS,
 } from '../Constants/userConstant';
 
 export const userReducer = (state = {user: []}, action) => {
@@ -83,6 +87,41 @@ export const userReducer = (state = {user: []}, action) => {
       return {
         ...state,
         isLogout: false,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const profileReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
+    case UPDATE_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case UPDATE_USER_RESET:
+      return {
+        ...state,
+        isUpdated: false,
       };
     case CLEAR_ERROR:
       return {
