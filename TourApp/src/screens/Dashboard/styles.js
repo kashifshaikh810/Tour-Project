@@ -4,7 +4,6 @@ import tw from 'tailwind-react-native-classnames';
 const styles = StyleSheet.create({
   container: tw`flex-1 bg-white`,
   scrollView: tw`flex-1`,
-  profileImageContainer: tw`w-full bg-green-100 items-center mt-7`,
   profileImage: tw`w-7/12 h-36 self-center mt-7 relative left-10 right-0 bottom-0 top-0`,
   imageStyle: tw`rounded-full`,
   profileEditIconContainer: tw`w-6/12 h-32 mt-1 justify-end items-end`,
