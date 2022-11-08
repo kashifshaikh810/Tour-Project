@@ -80,6 +80,7 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
     email,
     name: `${firstName} ${lastName}`,
     imageProfile,
+    updatedAt: new Date().toISOString(),
   };
 
   const user = await UserModel.findByIdAndUpdate({ _id: req.user._id }, data, {

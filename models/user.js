@@ -26,6 +26,9 @@ const userSchema = mongoose.Schema({
   imageProfile: {
     type: String,
   },
+  updatedAt: {
+    type: Date,
+  },
 });
 
 export default mongoose.model("User", userSchema);
