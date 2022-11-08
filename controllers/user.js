@@ -92,3 +92,38 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
     user,
   });
 });
+
+export const updatePassword = catchAsyncError(async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!req.user._id) {
+    return next(new ErrorHandler("User not login", 400));
+  }
+
+  const user = await UserModel.findById(req.user._id);
+
+  const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+
+  if (!isPasswordCorrect) {
+    return next(new ErrorHandler("Password doesn't match", 400));
+  }
+
+  const hashPassword = await bcrypt.hash(newPassword, 12);
+
+  const data = {
+    password: hashPassword,
+  };
+
+  const updatedUser = await UserModel.findByIdAndUpdate(
+    { _id: req.user._id },
+    data,
+    {
+      new: true,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    updatedUser,
+  });
+});
