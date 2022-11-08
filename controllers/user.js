@@ -94,7 +94,7 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
 });
 
 export const updatePassword = catchAsyncError(async (req, res, next) => {
-  const { oldPassword, newPassword } = req.body;
+  const { oldPassword, newPassword, confirmPassword } = req.body;
 
   if (!req.user._id) {
     return next(new ErrorHandler("User not login", 400));
@@ -105,7 +105,13 @@ export const updatePassword = catchAsyncError(async (req, res, next) => {
   const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
 
   if (!isPasswordCorrect) {
-    return next(new ErrorHandler("Password doesn't match", 400));
+    return next(new ErrorHandler("Old Password doesn't match", 400));
+  }
+
+  if (newPassword !== confirmPassword) {
+    return next(
+      new ErrorHandler("New Password doesn't match with confirm Password", 400)
+    );
   }
 
   const hashPassword = await bcrypt.hash(newPassword, 12);
