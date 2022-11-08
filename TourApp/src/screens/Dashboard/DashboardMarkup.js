@@ -57,6 +57,19 @@ const DashboardMarkup = props => {
         <Text style={styles.heading}>{props?.user?.name}</Text>
       </View>
 
+      <MyButton
+        {...props}
+        title="UPDATE PASSWORD"
+        bgColor="gray"
+        textColor="#fff"
+        afterPressColor="#b3b3b3"
+        android_ripple="#b3b3b3"
+        style={styles.passwordButton}
+        onPress={() => {}}
+      />
+
+      <View style={styles.divider} />
+
       <ScrollView style={styles.scrollView}>
         {props?.loading ? (
           <ActivityIndicator />
