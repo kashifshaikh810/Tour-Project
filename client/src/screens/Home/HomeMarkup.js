@@ -28,6 +28,9 @@ const HomeMarkup = props => {
           renderItem={({item, index}) => (
             <View style={styles.card}>
               <Image source={{uri: item.imageFile}} style={styles.tourImage} />
+              <View style={styles.nameContainer}>
+                <Text style={styles.name}>Tour By ~ {item.name}</Text>
+              </View>
               <View style={styles.tagsContainer}>
                 {item.tags &&
                   item.tags.map((tag, index) => {
