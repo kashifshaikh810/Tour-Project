@@ -28,16 +28,16 @@ const UpdatePasswordMarkup = props => {
             secureTextEntry
             style={[
               styles.textInput,
-              props?.passwordError !== '' && styles.borderRedColor,
+              props?.oldPasswordError !== '' && styles.borderRedColor,
             ]}
             placeholderTextColor={
-              props?.passwordError?.length > 1 ? 'red' : 'gray'
+              props?.oldPasswordError?.length > 1 ? 'red' : 'gray'
             }
-            value={props?.password}
-            onChangeText={text => props?.passwordOnChange(text)}
+            value={props?.oldPassword}
+            onChangeText={text => props?.oldPasswordOnChange(text)}
           />
-          {props?.passwordError && (
-            <Text style={styles.errorText}>{props?.passwordError}</Text>
+          {props?.oldPasswordError && (
+            <Text style={styles.errorText}>{props?.oldPasswordError}</Text>
           )}
         </View>
 
@@ -47,16 +47,16 @@ const UpdatePasswordMarkup = props => {
             secureTextEntry
             style={[
               styles.textInput,
-              props?.passwordError !== '' && styles.borderRedColor,
+              props?.newPasswordError !== '' && styles.borderRedColor,
             ]}
             placeholderTextColor={
-              props?.passwordError?.length > 1 ? 'red' : 'gray'
+              props?.newPasswordError?.length > 1 ? 'red' : 'gray'
             }
-            value={props?.password}
-            onChangeText={text => props?.passwordOnChange(text)}
+            value={props?.newPassword}
+            onChangeText={text => props?.newPasswordOnChange(text)}
           />
-          {props?.passwordError && (
-            <Text style={styles.errorText}>{props?.passwordError}</Text>
+          {props?.newPasswordError && (
+            <Text style={styles.errorText}>{props?.newPasswordError}</Text>
           )}
         </View>
 
@@ -66,16 +66,16 @@ const UpdatePasswordMarkup = props => {
             secureTextEntry
             style={[
               styles.textInput,
-              props?.passwordError !== '' && styles.borderRedColor,
+              props?.confirmPasswordError !== '' && styles.borderRedColor,
             ]}
             placeholderTextColor={
-              props?.passwordError?.length > 1 ? 'red' : 'gray'
+              props?.confirmPasswordError?.length > 1 ? 'red' : 'gray'
             }
-            value={props?.password}
-            onChangeText={text => props?.passwordOnChange(text)}
+            value={props?.confirmPassword}
+            onChangeText={text => props?.confirmPasswordOnChange(text)}
           />
-          {props?.passwordError && (
-            <Text style={styles.errorText}>{props?.passwordError}</Text>
+          {props?.confirmPasswordError && (
+            <Text style={styles.errorText}>{props?.confirmPasswordError}</Text>
           )}
         </View>
 
@@ -87,11 +87,11 @@ const UpdatePasswordMarkup = props => {
           afterPressColor="#b3b3b3"
           android_ripple="#b3b3b3"
           style={styles.button}
-          onPress={() => {}}
+          onPress={() => props?.updateOnPressHandler()}
           loading={false}
         />
 
-        {/*  divider means line */}
+        {/* divider */}
         <View style={styles.divider} />
 
         <View style={styles.already}>
