@@ -65,7 +65,8 @@ const DashboardMarkup = props => {
         afterPressColor="#b3b3b3"
         android_ripple="#b3b3b3"
         style={styles.passwordButton}
-        onPress={() => {}}
+        onPress={() => props?.navigation.navigate('UpdatePassword')}
+        loading={false}
       />
 
       <View style={styles.divider} />

@@ -11,6 +11,7 @@ import Dashboard from '../screens/Dashboard/Dashboard';
 import AddUpdateTour from '../screens/AddUpdateTour/AddUpdateTour';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
 import Profile from '../screens/Profile/Profile';
+import UpdatePassword from '../screens/UpdatePassword/UpdatePassword';
 
 const Navigation = () => {
   const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ const Navigation = () => {
         <Stack.Screen name="AddUpdateTour" component={AddUpdateTour} />
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
       </Stack.Navigator>
     </NavigationContainer>
   );
