@@ -7,6 +7,8 @@ const TourDetail = props => {
   const dispatch = useDispatch();
   const {loading, tour, error} = useSelector(state => state.tourDetail);
 
+  const {tours} = useSelector(state => state.allTours);
+
   const id = props?.route?.params?.id;
 
   useEffect(() => {
@@ -26,7 +28,9 @@ const TourDetail = props => {
     }
   }, [dispatch, error, id]);
 
-  return <TourDetailMarkup {...props} loading={loading} tour={tour} />;
+  return (
+    <TourDetailMarkup {...props} loading={loading} tour={tour} tours={tours} />
+  );
 };
 
 export default TourDetail;
