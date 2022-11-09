@@ -88,7 +88,7 @@ const UpdatePasswordMarkup = props => {
           android_ripple="#b3b3b3"
           style={styles.button}
           onPress={() => props?.updateOnPressHandler()}
-          loading={false}
+          loading={props?.loading}
         />
 
         {/* divider */}

@@ -16,6 +16,9 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAIL,
 } from '../Constants/userConstant';
 
 export const userSignUp = registerData => async dispatch => {
@@ -125,6 +128,28 @@ export const updateProfile = profileData => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const updatePassword = passwordData => async dispatch => {
+  try {
+    dispatch({type: UPDATE_PASSWORD_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = 'http://192.168.100.8:5000/users/updatePassword';
+
+    const {data} = await axios.put(url, passwordData, config);
+
+    dispatch({
+      type: UPDATE_PASSWORD_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PASSWORD_FAIL,
       payload: error?.response?.data?.message,
     });
   }

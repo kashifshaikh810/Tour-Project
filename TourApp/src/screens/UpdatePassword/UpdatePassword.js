@@ -1,7 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {ToastAndroid} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  clearErrors,
+  loadUser,
+  updatePassword,
+} from '../../redux/Action/userAction';
+import {UPDATE_PASSWORD_RESET} from '../../redux/Constants/userConstant';
 import UpdatePasswordMarkup from './UpdatePasswordMarkup';
 
 const UpdatePassword = props => {
+  const dispatch = useDispatch();
+  const {loading, isUpdated, error} = useSelector(state => state.profile);
+
   const [oldPassword, setOldPassword] = useState('');
   const [oldPasswordError, setOldPasswordError] = useState('');
 
@@ -52,9 +63,43 @@ const UpdatePassword = props => {
     }
 
     if (oldPassword && newPassword && confirmPassword) {
-      console.log(oldPassword, newPassword, confirmPassword);
+      const passwordData = {
+        oldPassword,
+        newPassword,
+        confirmPassword,
+      };
+      dispatch(updatePassword(passwordData));
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      ToastAndroid.showWithGravityAndOffset(
+        error,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch(clearErrors());
+    }
+
+    if (isUpdated) {
+      dispatch(loadUser());
+      props.navigation.navigate('Dashboard');
+      setOldPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+      ToastAndroid.showWithGravityAndOffset(
+        'Password Updated Succeed',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      dispatch({type: UPDATE_PASSWORD_RESET});
+    }
+  }, [dispatch, error, isUpdated]);
 
   return (
     <UpdatePasswordMarkup
@@ -75,6 +120,7 @@ const UpdatePassword = props => {
       newPasswordOnChange={newPasswordOnChange}
       confirmPasswordOnChange={confirmPasswordOnChange}
       updateOnPressHandler={updateOnPressHandler}
+      loading={loading}
     />
   );
 };
