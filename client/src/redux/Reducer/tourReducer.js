@@ -17,6 +17,9 @@ import {
   LIKE_TOUR_FAIL,
   LIKE_TOUR_REQUEST,
   LIKE_TOUR_SUCCESS,
+  POPULAR_TAGS_FAIL,
+  POPULAR_TAGS_REQUEST,
+  POPULAR_TAGS_SUCCESS,
   RELATED_TOUR_FAIL,
   RELATED_TOUR_REQUEST,
   RELATED_TOUR_SUCCESS,
@@ -307,6 +310,36 @@ export const relatedTourReducer = (state = {relatedTour: []}, action) => {
         relatedTour: action.payload,
       };
     case RELATED_TOUR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const popularTagsReducer = (state = {tags: []}, action) => {
+  switch (action.type) {
+    case POPULAR_TAGS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case POPULAR_TAGS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        tags: action.payload,
+      };
+    case POPULAR_TAGS_FAIL:
       return {
         ...state,
         loading: false,

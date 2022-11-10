@@ -10,7 +10,7 @@ import styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearErrors, userLogout} from '../../redux/Action/userAction';
 import {LOGOUT_USER_RESET} from '../../redux/Constants/userConstant';
-import {getTours} from '../../redux/Action/tourAction';
+import {getPopularTags, getTours} from '../../redux/Action/tourAction';
 
 const Header = props => {
   const dispatch = useDispatch();
@@ -51,6 +51,7 @@ const Header = props => {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
+          dispatch(getPopularTags());
           dispatch(getTours());
           props.navigation.navigate('Home');
         }}>

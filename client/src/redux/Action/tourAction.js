@@ -31,6 +31,9 @@ import {
   RELATED_TOUR_REQUEST,
   RELATED_TOUR_SUCCESS,
   RELATED_TOUR_FAIL,
+  POPULAR_TAGS_REQUEST,
+  POPULAR_TAGS_SUCCESS,
+  POPULAR_TAGS_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -246,9 +249,28 @@ export const getRelatedTours = tags => async dispatch => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
     dispatch({
       type: RELATED_TOUR_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const getPopularTags = () => async dispatch => {
+  try {
+    dispatch({type: POPULAR_TAGS_REQUEST});
+
+    const url = 'http://192.168.100.8:5000/tour';
+
+    const {data} = await axios.get(url);
+
+    dispatch({
+      type: POPULAR_TAGS_SUCCESS,
+      payload: data.tags,
+    });
+  } catch (error) {
+    dispatch({
+      type: POPULAR_TAGS_FAIL,
       payload: error?.response?.data?.message,
     });
   }

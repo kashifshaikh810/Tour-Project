@@ -1,12 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import HomeMarkup from './HomeMarkup';
 import {useDispatch, useSelector} from 'react-redux';
-import {clearErrors, getTours, likeTour} from '../../redux/Action/tourAction';
+import {
+  clearErrors,
+  getPopularTags,
+  getTours,
+  likeTour,
+} from '../../redux/Action/tourAction';
 import {ToastAndroid} from 'react-native';
 
 const Home = props => {
   const dispatch = useDispatch();
   const {loading, tours, error} = useSelector(state => state.allTours);
+
+  const {
+    loading: tagLoading,
+    tags,
+    error: tagError,
+  } = useSelector(state => state.popularTags);
 
   const {user, isAuthenticated} = useSelector(state => state.registerUser);
 
@@ -45,6 +56,7 @@ const Home = props => {
       dispatch(getTours());
     }
 
+    dispatch(getPopularTags());
     dispatch(getTours());
   }, [dispatch, error, updatedTourError, updatedTour]);
 
@@ -66,6 +78,8 @@ const Home = props => {
       likeOnPressHandler={likeOnPressHandler}
       userId={userId}
       isAuthenticated={isAuthenticated}
+      tagLoading={tagLoading}
+      tags={tags}
     />
   );
 };

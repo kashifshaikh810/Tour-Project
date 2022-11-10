@@ -22,16 +22,24 @@ const HomeMarkup = props => {
           <Text style={styles.tourHeading}>Popular Tags</Text>
         </View>
 
-        <FlatList
-          data={['Washing Turn', 'North', 'South', 'karachi', 'east']}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={4}
-          renderItem={({item, index}) => (
-            <TouchableOpacity>
-              <Text style={styles.tagItem}>{item}</Text>
-            </TouchableOpacity>
-          )}
-        />
+        {props?.tagLoading ? (
+          <ActivityIndicator size={30} color="gray" />
+        ) : (
+          <FlatList
+            data={props?.tags && props?.tags}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={3}
+            renderItem={({item, index}) => (
+              <TouchableOpacity
+                style={styles.tagContainer}
+                onPress={() => {
+                  props.navigation.navigate('ToursByTag', {tag: item});
+                }}>
+                <Text style={styles.tagItem}>{item}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
 
         <View style={[styles.tourHeadingContainer, {marginTop: 0}]}>
           <Text style={styles.tourHeading}>Tours</Text>
