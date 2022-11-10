@@ -4,6 +4,7 @@ const router = express.Router();
 import {
   createTour,
   deleteTour,
+  getAllTags,
   getRelatedTours,
   getTour,
   getTours,
@@ -19,8 +20,9 @@ import { isAuthenticatedUser } from "../middleware/auth.js";
 router.get("/search", getToursBySearch);
 router.get("/tag/:tag", getToursByTag);
 router.get("/relatedTours", getRelatedTours);
-router.get("/", getTours);
+router.get("/allTours", getTours);
 router.get("/:id", getTour);
+router.get("/", getAllTags);
 
 // auth -
 router.post("/", isAuthenticatedUser, createTour);

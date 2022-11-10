@@ -152,3 +152,18 @@ export const likeTour = catchAsyncError(async (req, res, next) => {
     updatedTour,
   });
 });
+
+export const getAllTags = catchAsyncError(async (req, res, next) => {
+  const tours = await TourModel.find();
+
+  let response = tours.map((tour, i) => {
+    return tour.tags;
+  });
+
+  let tags = response.flat();
+
+  res.status(200).json({
+    success: true,
+    tags,
+  });
+});
