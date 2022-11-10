@@ -34,7 +34,7 @@ export const getTours = () => async dispatch => {
   try {
     dispatch({type: ALL_TOUR_REQUEST});
 
-    const url = 'http://192.168.100.8:5000/tour';
+    const url = 'http://192.168.100.8:5000/tour/allTours';
 
     const {data} = await axios.get(url);
 
