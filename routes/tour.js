@@ -19,7 +19,7 @@ import { isAuthenticatedUser } from "../middleware/auth.js";
 // without auth -
 router.get("/search", getToursBySearch);
 router.get("/tag/:tag", getToursByTag);
-router.get("/relatedTours", getRelatedTours);
+router.post("/relatedTours", getRelatedTours);
 router.get("/allTours", getTours);
 router.get("/:id", getTour);
 router.get("/", getAllTags);
