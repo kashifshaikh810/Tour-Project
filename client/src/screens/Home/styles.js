@@ -3,6 +3,7 @@ import tw from 'tailwind-react-native-classnames';
 
 const styles = StyleSheet.create({
   container: tw`flex-1 bg-white`,
+  tagItem: tw`bg-gray-100 p-4 m-2 ml-1.5 text-gray-400 text-base`,
   tourHeadingContainer: tw`w-full h-16 mb-2 items-center mt-4 pt-4`,
   tourHeading: tw`text-2xl border-b-2 border-gray-300 w-5/12 text-center pb-2`,
   card: tw`border-2 border-gray-100 w-11/12 h-96 self-center pb-2 mt-5 mb-5`,
