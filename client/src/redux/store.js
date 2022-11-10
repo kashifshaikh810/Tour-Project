@@ -11,6 +11,7 @@ import {
   currentUserAllToursReducer,
   deleteUserTourReducer,
   likeTourReducer,
+  relatedTourReducer,
   tourDetailReducer,
   tourReducer,
   toursByTagReducer,
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   addNewTour: addTourReducer,
   updatedTour: updateTourReducer,
   profile: profileReducer,
+  relatedTours: relatedTourReducer,
 });
 
 let initialState = {};

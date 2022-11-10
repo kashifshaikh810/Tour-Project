@@ -85,7 +85,7 @@ const TourDetailMarkup = props => {
           </View>
 
           <FlatList
-            data={props.tours && props.tours}
+            data={props.relatedTour && props.relatedTour}
             renderItem={({item, index}) => (
               <TouchableOpacity
                 style={styles.relatedTourCard}

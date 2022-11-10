@@ -28,6 +28,9 @@ import {
   UPDATE_TOUR_REQUEST,
   UPDATE_TOUR_SUCCESS,
   UPDATE_TOUR_FAIL,
+  RELATED_TOUR_REQUEST,
+  RELATED_TOUR_SUCCESS,
+  RELATED_TOUR_FAIL,
 } from '../Constants/tourConstant';
 
 export const getTours = () => async dispatch => {
@@ -219,6 +222,33 @@ export const updateTour = (id, updateTourData) => async dispatch => {
   } catch (error) {
     dispatch({
       type: UPDATE_TOUR_FAIL,
+      payload: error?.response?.data?.message,
+    });
+  }
+};
+
+export const getRelatedTours = tags => async dispatch => {
+  try {
+    dispatch({type: RELATED_TOUR_REQUEST});
+
+    const config = {headers: {'Content-Type': 'application/json'}};
+
+    const url = 'http://192.168.100.8:5000/tour/relatedTours';
+
+    const tagsData = {
+      tags: tags,
+    };
+
+    const {data} = await axios.post(url, tagsData, config);
+
+    dispatch({
+      type: RELATED_TOUR_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: RELATED_TOUR_FAIL,
       payload: error?.response?.data?.message,
     });
   }

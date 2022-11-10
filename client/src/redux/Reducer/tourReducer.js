@@ -17,6 +17,9 @@ import {
   LIKE_TOUR_FAIL,
   LIKE_TOUR_REQUEST,
   LIKE_TOUR_SUCCESS,
+  RELATED_TOUR_FAIL,
+  RELATED_TOUR_REQUEST,
+  RELATED_TOUR_SUCCESS,
   SEARCH_TOUR_FAIL,
   SEARCH_TOUR_REQUEST,
   SEARCH_TOUR_SUCCESS,
@@ -278,6 +281,36 @@ export const updateTourReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const relatedTourReducer = (state = {relatedTour: []}, action) => {
+  switch (action.type) {
+    case RELATED_TOUR_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case RELATED_TOUR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        relatedTour: action.payload,
+      };
+    case RELATED_TOUR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     case CLEAR_ERROR:
       return {
