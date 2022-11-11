@@ -74,6 +74,7 @@ const HomeMarkup = props => {
                       );
                     })}
                 </View>
+                {console.log(item.name)}
                 <TouchableOpacity
                   disabled={!props?.isAuthenticated}
                   style={styles.likeContainer}

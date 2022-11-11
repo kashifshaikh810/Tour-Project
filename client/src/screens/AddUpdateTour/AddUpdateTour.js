@@ -22,6 +22,8 @@ const AddUpdateTour = props => {
 
   const {tours} = useSelector(state => state.allTours);
 
+  const {user} = useSelector(state => state.registerUser);
+
   const singleTour =
     idParam && tours && tours.find(tour => tour?._id === idParam);
 
@@ -125,6 +127,7 @@ const AddUpdateTour = props => {
         description: description,
         tags: tags,
         imageFile: imageFile,
+        name: user?.name,
       };
       dispatch(addTour(data));
     }
